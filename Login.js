@@ -3,7 +3,7 @@ import { View, StyleSheet, Image } from 'react-native';
 import { Button, TextField, Typography } from '@mui/material';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Login = () => {
+const Login = ({navigation}) => {
     return (
     <View style={styles.container}>
         <View style={styles.logoContainer}>
@@ -28,6 +28,9 @@ const Login = () => {
         variant="contained" 
         color="primary" 
         style={styles.loginButton}
+        onClick={() =>
+            navigation.navigate('Home', {name: 'Home'})
+          }
         >
         Login
         </Button>
