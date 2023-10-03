@@ -16,7 +16,11 @@ const App = () => {
           component={Login}
           options={{title: 'Quick Routine'}}
         />
-        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen 
+        name="Home" 
+        component={Home} 
+        options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
     
