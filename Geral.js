@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
+import { Button, Card } from 'react-native-paper';
 
 const Geral = () => {
     const today = new Date();
@@ -35,9 +36,9 @@ const Geral = () => {
             check: 'green',
             close: 'red'
         };
-
+    
         return (
-            <View style={styles.card}>
+            <Card style={styles.card}>
                 <View style={styles.leftContainer}>
                     <Text style={styles.habitName}>{habitName}</Text>
                     <View style={styles.daysContainer}>
@@ -56,13 +57,15 @@ const Geral = () => {
                         ))}
                     </View>
                 </View>
-                <TouchableOpacity 
-                    style={[styles.todayButton, { backgroundColor: buttonColors[buttonState] }]}
+                <Button 
+                    icon={() => <MaterialIcons name={buttonState} size={24} color="white" />}
+                    style={[
+                        styles.todayButton, 
+                        { backgroundColor: buttonColors[buttonState] }
+                    ]}
                     onPress={handleButtonClick}
-                >
-                    <MaterialIcons name={buttonState} size={24} color="white" />
-                </TouchableOpacity>
-            </View>
+                />
+            </Card>
         );
     };
 

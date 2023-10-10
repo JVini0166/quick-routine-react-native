@@ -1,4 +1,4 @@
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
 import { Button, TextField, Typography } from '@mui/material';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -36,12 +36,16 @@ const Login = ({navigation}) => {
         </Button>
         
         <View style={styles.linkContainer}>
-            <Typography variant="caption" style={styles.linkText}>
-            Esqueci minha senha
-            </Typography>
-            <Typography variant="caption" style={styles.linkText}>
-            Criar uma nova conta
-            </Typography>
+          <TouchableOpacity onPress={() => navigation.navigate('/forgotpassword')}>
+              <Typography variant="caption" style={styles.linkText}>
+                  Esqueci minha senha
+              </Typography>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('CreateAccount')}>
+              <Typography variant="caption" style={styles.linkText}>
+                  Criar uma nova conta
+              </Typography>
+          </TouchableOpacity>
         </View>
         <View style={styles.socialLoginContainer}>
             <Button

@@ -4,6 +4,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './Login'
 import Home from './Home'
+import CreateAccount from './CreateAccount'
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -20,6 +21,11 @@ const App = () => {
         name="Home" 
         component={Home} 
         options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+        name="CreateAccount" 
+        component={CreateAccount} 
+        options={{ title: 'Crie sua Conta' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
