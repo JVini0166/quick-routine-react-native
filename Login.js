@@ -1,9 +1,20 @@
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
-
-import { Button, TextField, Typography } from '@mui/material';
+import { TextField, IconButton, InputAdornment, Button, Typography } from '@mui/material';
 import Icon from 'react-native-vector-icons/Ionicons';
+import React, { useState }  from 'react';
+
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 const Login = ({navigation}) => {
+
+   const [username, setUsername] = useState('');
+
+   const [password, setPassword] = useState('');
+
+   const [showPassword, setShowPassword] = useState(false);
+   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
     return (
     <View style={styles.container}>
         <View style={styles.logoContainer}>
@@ -15,14 +26,30 @@ const Login = ({navigation}) => {
         <TextField
             label="Usuário"
             variant="outlined"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
             style={styles.input}
         />
         <TextField
-            label="Senha"
-            variant="outlined"
-            style={styles.input}
-            secureTextEntry
-        />
+                label="Senha"
+                variant="outlined"
+                type={showPassword ? 'text' : 'password'}
+                style={styles.input}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                InputProps={{
+                    endAdornment: (
+                        <InputAdornment position="end">
+                            <IconButton
+                                onClick={() => setShowPassword(!showPassword)}
+                                edge="end"
+                            >
+                                {showPassword ? <VisibilityOff /> : <Visibility />}
+                            </IconButton>
+                        </InputAdornment>
+                    )
+                }}
+            />
         
         <Button 
         variant="contained" 
