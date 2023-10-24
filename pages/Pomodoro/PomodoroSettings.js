@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { TextInput, Switch, Divider, Button } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PomodoroSettings = () => {
     const [pomodoroTime, setPomodoroTime] = useState('');
@@ -35,7 +36,7 @@ const PomodoroSettings = () => {
                 setPomodoroCount(pomodoroCount);
             }
         } catch (error) {
-            alert('Erro', 'Houve um erro ao carregar as configurações.');
+            console.log('Erro' + error.toString());
         }
     }
 
@@ -50,9 +51,9 @@ const PomodoroSettings = () => {
                 pomodoroCount
             };
             await AsyncStorage.setItem('PomodoroSettings', JSON.stringify(settings));
-            Alert.alert('Sucesso', 'Configurações salvas com sucesso!');
+            alert('Sucesso', 'Configurações salvas com sucesso!');
         } catch (error) {
-            Alert.alert('Erro', 'Houve um erro ao salvar as configurações.');
+            alert('Erro' + error.toString());
         }
     }
 

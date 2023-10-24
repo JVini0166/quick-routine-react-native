@@ -5,6 +5,7 @@ import Geral from './Geral/Geral';
 import Habit from './Habit/Habit'
 import Revision from './Revision/Revision'
 import Progress from './Progress/Progress'
+
 const Home = ({ navigation }) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -22,13 +23,18 @@ const Home = ({ navigation }) => {
   });
 
   return (
+
+    
+
     <View style={styles.container}>
+      
       <Appbar.Header>
         <Appbar.Content title="Quick Routine" />
         <Appbar.Action icon="home" onPress={() => navigation.navigate('Home')} />
         <Appbar.Action icon="timer" onPress={() => navigation.navigate('Pomodoro')} />
         <Appbar.Action icon="information" onPress={() => navigation.navigate('Sobre')} />
       </Appbar.Header>
+      
 
 
 
@@ -57,6 +63,9 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 24,
   },
+  gradient: {
+    flex: 1
+},
 });
 
 export default Home;
