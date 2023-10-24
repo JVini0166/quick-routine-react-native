@@ -1,9 +1,7 @@
-import { View, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
-import Icon from 'react-native-vector-icons/Ionicons';;
-import { TextField, IconButton, InputAdornment, Button } from '@mui/material';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
+import { View, StyleSheet, Alert } from 'react-native';
+import { TextInput, Button, IconButton } from 'react-native-paper';
+import { MaterialIcons } from '@expo/vector-icons';
 
 
 const CreateAccount = ({ navigation }) => {
@@ -51,77 +49,54 @@ const CreateAccount = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <TextField
+            <TextInput
                 label="Nome"
-                variant="outlined"
+                mode="outlined"
                 style={styles.input}
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChangeText={setName}
             />
 
-            <TextField
+            <TextInput
                 label="Sobrenome"
-                variant="outlined"
+                mode="outlined"
                 style={styles.input}
                 value={surname}
-                onChange={(e) => setSurname(e.target.value)}
+                onChangeText={setSurname}
             />
 
-            <TextField
+            <TextInput
                 label="Email"
-                variant="outlined"
+                mode="outlined"
                 style={styles.input}
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChangeText={setEmail}
             />
 
-            <TextField
+            <TextInput
                 label="Senha"
-                variant="outlined"
-                type={showPassword ? 'text' : 'password'}
+                mode="outlined"
+                secureTextEntry={!showPassword}
                 style={styles.input}
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                            <IconButton
-                                onClick={() => setShowPassword(!showPassword)}
-                                edge="end"
-                            >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                    )
-                }}
+                onChangeText={setPassword}
+                right={<TextInput.Icon name={() => <MaterialIcons name={showPassword ? "visibility-off" : "visibility"} size={20} />} onPress={() => setShowPassword(!showPassword)} />}
             />
 
-            <TextField
+            <TextInput
                 label="Confirme sua Senha"
-                variant="outlined"
-                type={showConfirmPassword ? 'text' : 'password'}
+                mode="outlined"
+                secureTextEntry={!showConfirmPassword}
                 style={styles.input}
                 value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                            <IconButton
-                                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                                edge="end"
-                            >
-                                {showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                    )
-                }}
+                onChangeText={setConfirmPassword}
+                right={<TextInput.Icon name={() => <MaterialIcons name={showConfirmPassword ? "visibility-off" : "visibility"} size={20} />} onPress={() => setShowConfirmPassword(!showConfirmPassword)} />}
             />
 
             <Button 
-            variant="contained" 
-            color="primary" 
+            mode="contained" 
             style={styles.registerButton}
-            onClick={handleRegister}
+            onPress={handleRegister}
             >
             Registrar
             </Button>

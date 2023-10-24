@@ -1,134 +1,120 @@
-import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
-import { TextField, IconButton, InputAdornment, Button, Typography } from '@mui/material';
-import Icon from 'react-native-vector-icons/Ionicons';
-import React, { useState }  from 'react';
+import React, { useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
+import { Button, Card, TextInput, FAB } from 'react-native-paper';
 
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
-const Login = ({navigation}) => {
-
-   const [username, setUsername] = useState('');
-
-   const [password, setPassword] = useState('');
-
-   const [showPassword, setShowPassword] = useState(false);
-   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+const Login = ({ navigation }) => {
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     return (
-    <View style={styles.container}>
-        <View style={styles.logoContainer}>
-            <Image
-            source={{ uri: 'https://your_logo_url_here.com' }}
-            style={styles.logo}
-            />
-        </View>
-        <TextField
-            label="Usuário"
-            variant="outlined"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            style={styles.input}
-        />
-        <TextField
-                label="Senha"
-                variant="outlined"
-                type={showPassword ? 'text' : 'password'}
-                style={styles.input}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                InputProps={{
-                    endAdornment: (
-                        <InputAdornment position="end">
-                            <IconButton
-                                onClick={() => setShowPassword(!showPassword)}
-                                edge="end"
-                            >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>
-                    )
-                }}
-            />
-        
-        <Button 
-        variant="contained" 
-        color="primary" 
-        style={styles.loginButton}
-        onClick={() =>
-            navigation.navigate('Home', {name: 'Home'})
-          }
-        >
-        Login
-        </Button>
-        
-        <View style={styles.linkContainer}>
-          <TouchableOpacity onPress={() => navigation.navigate('/forgotpassword')}>
-              <Typography variant="caption" style={styles.linkText}>
-                  Esqueci minha senha
-              </Typography>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('CreateAccount')}>
-              <Typography variant="caption" style={styles.linkText}>
-                  Criar uma nova conta
-              </Typography>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.socialLoginContainer}>
-            <Button
-            startIcon={<Icon name="logo-google" size={20} />}
-            variant="outlined"
-            style={styles.socialButton}
-            >
-            Google
-            </Button>
-            <Button
-            startIcon={<Icon name="logo-facebook" size={20} />}
-            variant="outlined"
-            style={styles.socialButton}
-            >
-            Facebook
-            </Button>
-        </View>
-    </View>
-    )
+        <ScrollView style={styles.container}>
+            <View style={styles.logoContainer}>
+                {/* Use any logo or image component here */}
+            </View>
+
+            <Card style={styles.card}>
+                <TextInput
+                    label="Usuário"
+                    value={username}
+                    onChangeText={setUsername}
+                    style={styles.input}
+                />
+
+                <TextInput
+                    label="Senha"
+                    value={password}
+                    onChangeText={setPassword}
+                    style={styles.input}
+                    secureTextEntry={!showPassword}
+                    right={
+                        <TextInput.Icon
+                            name={showPassword ? "eye-off" : "eye"}
+                            onPress={() => setShowPassword(!showPassword)}
+                        />
+                    }
+                />
+
+                <Button 
+                    mode="contained" 
+                    style={styles.loginButton}
+                    onPress={() => navigation.navigate('Home', { name: 'Home' })}
+                >
+                    Login
+                </Button>
+
+                <View style={styles.linkContainer}>
+                    <TouchableOpacity onPress={() => navigation.navigate('ForgotPassword')}>
+                        <Text style={styles.linkText}>Esqueci minha senha</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => navigation.navigate('CreateAccount')}>
+                        <Text style={styles.linkText}>Criar uma nova conta</Text>
+                    </TouchableOpacity>
+                </View>
+            </Card>
+
+            <View style={styles.socialLoginContainer}>
+                <Button
+                    icon="google"
+                    mode="outlined"
+                    style={styles.socialButton}
+                    onPress={() => {
+                        // Integrate Google login here
+                    }}
+                >
+                    Google
+                </Button>
+                <Button
+                    icon="facebook"
+                    mode="outlined"
+                    style={styles.socialButton}
+                    onPress={() => {
+                        // Integrate Facebook login here
+                    }}
+                >
+                    Facebook
+                </Button>
+            </View>
+        </ScrollView>
+    );
 }
+
 const styles = StyleSheet.create({
     container: {
-      flex: 1,
-      padding: 16,
-      justifyContent: 'center',
+        flex: 1,
+        padding: 16,
     },
     logoContainer: {
-      alignItems: 'center',
-      marginBottom: 40,
+        alignItems: 'center',
+        marginBottom: 40,
     },
-    logo: {
-      width: 150,
-      height: 150,
-      resizeMode: 'contain',
+    card: {
+        padding: 16,
+        marginBottom: 20,
     },
     input: {
-      marginBottom: 20,
+        marginBottom: 20,
     },
     loginButton: {
-      marginBottom: 10,
+        marginBottom: 10,
     },
     linkContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginBottom: 20,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 20,
     },
     linkText: {
-      color: '#007BFF',
+        color: '#007BFF',
     },
     socialLoginContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
     },
     socialButton: {
-      flex: 0.48,
+        flex: 0.48,
+        marginBottom: 20,
     },
-  });
+});
 
 export default Login;
