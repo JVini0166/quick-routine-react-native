@@ -4,43 +4,47 @@ import { Button, TextInput } from 'react-native-paper';
 import { DatePickerInput } from 'react-native-paper-dates';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-const CreateHabit = ({ navigation }) => {
+const CreateHabit = ({ navigation, route }) => {
     const [inputStartDate, setInputStartDate] = useState(undefined);
     const [inputEndDate, setInputEndDate] = useState(undefined);
     const [error, setError] = React.useState(null);
 
+    const { frequency = null, days = null, repeat = null } = route.params || {};
+
     const BACKEND_URL = "https://5000-jvini0166-quickroutinef-ha2qe54cevf.ws-us105.gitpod.io/quick-routine"
 
     const createHabit = async () => {
-        try {
-            const response = await fetch(BACKEND_URL + '/create_habit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    name: habitName, // assumindo que você tem um state ou variável chamado habitName
-                    description: habitDescription, // e assim por diante...
-                    frequency: habitFrequency,
-                    status: 'active', // exemplo; ajuste conforme sua necessidade
-                    start_date: inputStartDate,
-                    target_date: inputEndDate,
-                    user_id: userId // precisa fornecer o userId de algum lugar, talvez de um contexto ou prop
-                }),
-            });
+
+        console.log(frequency, days, repeat);
+        // try {
+        //     const response = await fetch(BACKEND_URL + '/create_habit', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify({
+        //             name: habitName, // assumindo que você tem um state ou variável chamado habitName
+        //             description: habitDescription, // e assim por diante...
+        //             frequency: habitFrequency,
+        //             status: 'active', // exemplo; ajuste conforme sua necessidade
+        //             start_date: inputStartDate,
+        //             target_date: inputEndDate,
+        //             user_id: userId // precisa fornecer o userId de algum lugar, talvez de um contexto ou prop
+        //         }),
+        //     });
     
-            const data = await response.json();
+        //     const data = await response.json();
             
-            if (!response.ok) {
-                setError(data.message);
-                return;
-            }
+        //     if (!response.ok) {
+        //         setError(data.message);
+        //         return;
+        //     }
     
-            // Tratar o sucesso como desejar, talvez navegando para outra tela, mostrando uma mensagem, etc.
+        //     // Tratar o sucesso como desejar, talvez navegando para outra tela, mostrando uma mensagem, etc.
     
-        } catch (error) {
-            setError('Erro ao criar o hábito. Tente novamente.');
-        }
+        // } catch (error) {
+        //     setError('Erro ao criar o hábito. Tente novamente.');
+        // }
     };
 
     return (
@@ -84,7 +88,7 @@ const CreateHabit = ({ navigation }) => {
                 <Button 
                     style={styles.createButton}
                     mode="contained"
-                    onPress={{createHabit}} 
+                    onPress={createHabit} 
                 >
                     Criar
                 </Button>
