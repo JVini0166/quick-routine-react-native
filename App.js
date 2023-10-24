@@ -5,6 +5,8 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Login from './Login'
 import Home from './Home'
 import CreateAccount from './CreateAccount'
+import CreateHabit from './CreateHabit'
+
 const Stack = createNativeStackNavigator();
 
 const App = () => {
@@ -26,6 +28,11 @@ const App = () => {
         name="CreateAccount" 
         component={CreateAccount} 
         options={{ title: 'Crie sua Conta' }}
+        />
+        <Stack.Screen 
+        name="CreateHabit" 
+        component={CreateHabit} 
+        options={{ title: 'Criar um Hábito' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Button, Card } from 'react-native-paper';
+import { Button, Card, FAB } from 'react-native-paper';
 
 const Geral = () => {
     const today = new Date();
     const daysOfWeek = ['Dom.', 'Seg.', 'Ter.', 'Qua.', 'Qui.', 'Sex.', 'Sáb.'];
+
+    const [habits, setHabits] = useState([]);
+    const [tasks, setTasks] = useState([]);
 
     const [selectedDate, setSelectedDate] = useState(today);
 
@@ -30,84 +33,40 @@ const Geral = () => {
     };
 
 
-    const HabitCard = ({ habitName }) => {
-        const buttonColors = {
-            question: 'yellow',
-            check: 'green',
-            close: 'red'
-        };
-    
-        return (
-            <Card style={styles.card}>
-                <View style={styles.leftContainer}>
-                    <Text style={styles.habitName}>{habitName}</Text>
-                    <View style={styles.daysContainer}>
-                        {week.slice(0, 4).map((date, index) => (
-                            <View 
-                                key={index} 
-                                style={[
-                                    styles.dayBox, 
-                                    index === 3 ? { borderColor: buttonColors[buttonState] } : {}
-                                ]}
-                            >
-                                <Text style={styles.dayText}>
-                                    {daysOfWeek[date.getDay()]}
-                                </Text>
-                            </View>
-                        ))}
-                    </View>
-                </View>
-                <Button 
-                    icon={() => <MaterialIcons name={buttonState} size={24} color="white" />}
-                    style={[
-                        styles.todayButton, 
-                        { backgroundColor: buttonColors[buttonState] }
-                    ]}
-                    onPress={handleButtonClick}
-                />
-            </Card>
-        );
-    };
+    const HabitCard = ({ habit }) => (
+        <Card style={styles.card}>
+            <Text>{habit.name}</Text>
+            <Button onPress={() => { /* Logic to mark habit as completed */ }}>Concluir</Button>
+        </Card>
+    );
+
+    const TaskCard = ({ task }) => (
+        <Card style={styles.card}>
+            <Text>{task.name}</Text>
+            <Button onPress={() => { /* Logic to mark task as completed */ }}>Concluir</Button>
+        </Card>
+    );
 
     return (
-        <View style={styles.mainContainer}>
-            <ScrollView 
-                horizontal 
-                showsHorizontalScrollIndicator={false} 
-                style={styles.dateScrollContainer}
-                contentContainerStyle={styles.contentContainer}
-            >
-            {week.map((date, index) => (
-                <TouchableOpacity key={index} onPress={() => setSelectedDate(date)}>
-                    <View style={styles.dateContainer}>
-                        <Text style={styles.dayOfWeek}>
-                            {daysOfWeek[date.getDay()]}
-                        </Text>
-                        <View style={[
-                            styles.dateBox, 
-                            selectedDate.getDate() === date.getDate() && styles.selectedDate
-                        ]}>
-                            <Text style={styles.dateText}>
-                                {date.getDate()}
-                            </Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-            ))}
-        </ScrollView>
-        <View style={styles.cardsContainer}>
-                {[1, 2, 3, 4, 5].map(num => (
-                    <HabitCard key={num} habitName={`Hábito ${num}`} />
-                ))}
-            </View>
+        <View style={styles.container}>
+            {/* ... Rest of the date selection code ... */}
+            
+            <ScrollView style={styles.cardsContainer}>
+                {habits.map(habit => 
+                    <HabitCard key={habit.id} habit={habit} />
+                )}
+                {tasks.map(task => 
+                    <TaskCard key={task.id} task={task} />
+                )}
+            </ScrollView>
+
         </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        marginTop: 20,
-        flex: 0, // Isso garante que o ScrollView não expanda
+        flex: 1, // Isso garante que o ScrollView não expanda
     },
     contentContainer: {
         alignItems: 'flex-start', // Alinha ao topo
@@ -191,6 +150,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
     },
+    
 });
 
 export default Geral;

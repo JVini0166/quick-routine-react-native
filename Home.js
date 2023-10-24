@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Appbar, BottomNavigation } from 'react-native-paper';
 import Geral from './Geral';
-
+import Habit from './Habit'
 const Home = ({ navigation }) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -14,7 +14,7 @@ const Home = ({ navigation }) => {
 
   const renderScene = BottomNavigation.SceneMap({
     geral: Geral,
-    habitos: HabitosRoute,
+    habitos: Habit,
     revisoes: RevisoesRoute,
     progresso: ProgressoRoute,
   });
@@ -40,7 +40,6 @@ const Home = ({ navigation }) => {
 };
 
 
-const HabitosRoute = () => <Text>Hábitos</Text>;
 const RevisoesRoute = () => <Text>Revisões</Text>;
 const ProgressoRoute = () => <Text>Progresso</Text>;
 
