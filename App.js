@@ -8,6 +8,7 @@ import CreateAccount from './pages/CreateAccount'
 import CreateHabit from './pages/Habit/CreateHabit'
 import HabitFrequency from './pages/Habit/HabitFrequency';
 import CreateRevision from './pages/Revision/CreateRevision';
+import Pomodoro from './pages/Pomodoro/Pomodoro';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,6 +26,11 @@ const App = () => {
         name="Home" 
         component={Home} 
         options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+        name="Pomodoro" 
+        component={Pomodoro} 
+        options={{ title: 'Pomodoro' }}
         />
         <Stack.Screen 
         name="CreateAccount" 
