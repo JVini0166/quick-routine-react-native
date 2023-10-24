@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, AsyncStorage } from 'react-native';
 import { Button, Card, FAB } from 'react-native-paper';
+import { MaterialIcons } from '@expo/vector-icons';
 
 const Pomodoro = ({ navigation }) => {
     const durations = {
@@ -70,9 +71,8 @@ const Pomodoro = ({ navigation }) => {
             </Card>
             <FAB
                 style={styles.fab}
-                small
-                icon="plus"
-                onPress={() => console.log('Add Task')}
+                icon="settings"  // Atualizado para o ícone de configuração
+                onPress={() => navigation.navigate('PomodoroSettings')} // Navega para PomodoroSettings
             />
         </View>
     )
