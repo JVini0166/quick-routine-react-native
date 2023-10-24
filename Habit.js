@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Button, Card, FAB } from 'react-native-paper';
 
-
 const Habit = ({navigation}) => {
 
     const [habits, setHabits] = useState([]);
@@ -36,7 +35,7 @@ const Habit = ({navigation}) => {
             <FAB
                 style={styles.fab}
                 icon="plus"
-                onPress={() => navigation.navigate('CreateHabit')}
+                onPress={() => navigation.navigate('CreateHabit', {name: 'CreateHabit'})}
             />
         </View>
     )

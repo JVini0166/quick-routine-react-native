@@ -14,7 +14,7 @@ const Home = ({ navigation }) => {
 
   const renderScene = BottomNavigation.SceneMap({
     geral: Geral,
-    habitos: Habit,
+    habitos: () => <Habit navigation={navigation} />,
     revisoes: RevisoesRoute,
     progresso: ProgressoRoute,
   });
