@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { RadioButton, Checkbox, Text, Button, TextInput } from 'react-native-paper';
 
-const HabitFrequency = ({ navigation }) => {
-    const [checked, setChecked] = useState('todos');
-    const [selectedDays, setSelectedDays] = useState([]);
-    const [repeatDays, setRepeatDays] = useState('');
+const HabitFrequency = ({ navigation, route }) => {
+    const { frequency, days, repeat } = route.params || {}; // Pegue os parâmetros da rota ou defina como um objeto vazio
+
+    const [checked, setChecked] = useState(frequency || 'todos'); // Use o valor fornecido ou o valor padrão
+    const [selectedDays, setSelectedDays] = useState(days || []);
+    const [repeatDays, setRepeatDays] = useState(repeat || '');
 
     const toggleDay = (day) => {
         if (selectedDays.includes(day)) {

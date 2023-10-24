@@ -62,7 +62,11 @@ const CreateHabit = ({ navigation, route }) => {
                 <Text style={styles.label}>Frequência</Text>
                 <Button 
                     mode="contained"
-                    onPress={() => navigation.navigate('HabitFrequency')} 
+                    onPress={() => navigation.navigate('HabitFrequency', { 
+                        frequency: frequency,
+                        days: days,
+                        repeat: repeat 
+                    })} 
                 >
                     Selecionar
                 </Button>
