@@ -6,6 +6,8 @@ import Login from './Login'
 import Home from './Home'
 import CreateAccount from './CreateAccount'
 import CreateHabit from './CreateHabit'
+import HabitFrequency from './HabitFrequency';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -33,6 +35,11 @@ const App = () => {
         name="CreateHabit" 
         component={CreateHabit} 
         options={{ title: 'Criar um Hábito' }}
+        />
+        <Stack.Screen 
+        name="HabitFrequency" 
+        component={HabitFrequency} 
+        options={{ title: 'Selecionar uma Frequência' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
