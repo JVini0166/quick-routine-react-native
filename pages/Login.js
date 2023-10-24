@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button, Card, TextInput, FAB } from 'react-native-paper';
+
 
 const Login = ({ navigation }) => {
     const [username, setUsername] = useState('');
@@ -10,11 +11,11 @@ const Login = ({ navigation }) => {
 
     return (
         <ScrollView style={styles.container}>
-            <View style={styles.logoContainer}>
-                {/* Use any logo or image component here */}
-            </View>
-
+        
             <Card style={styles.card}>
+            <View style={styles.logoContainer}>
+            <Image source={require('../assets/quickroutine-logo.png')} style={styles.logo} />
+            </View>
                 <TextInput
                     label="Usuário"
                     value={username}
@@ -85,10 +86,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 16,
     },
-    logoContainer: {
-        alignItems: 'center',
-        marginBottom: 40,
-    },
+    
     card: {
         padding: 16,
         marginBottom: 20,
@@ -114,6 +112,17 @@ const styles = StyleSheet.create({
     socialButton: {
         flex: 0.48,
         marginBottom: 20,
+    },
+    logoContainer: {
+        flex: 1, // Isso garante que o container ocupe todo o espaço disponível
+        justifyContent: 'center', // Alinha verticalmente no centro
+        alignItems: 'center',     // Alinha horizontalmente no centro
+        marginBottom: 40,
+    },
+    logo: {
+        width: 200,
+        height: 270,
+        marginBottom: 20,  // Use marginBottom em vez de paddingBottom para dar espaço abaixo da imagem
     },
 });
 
