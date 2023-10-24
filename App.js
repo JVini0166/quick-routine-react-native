@@ -2,12 +2,12 @@ import React from 'react';
 
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Login from './Login'
-import Home from './Home'
-import CreateAccount from './CreateAccount'
-import CreateHabit from './CreateHabit'
-import HabitFrequency from './HabitFrequency';
-
+import Login from './pages/Login'
+import Home from './pages/Home'
+import CreateAccount from './pages/CreateAccount'
+import CreateHabit from './pages/Habit/CreateHabit'
+import HabitFrequency from './pages/Habit/HabitFrequency';
+import CreateRevision from './pages/Revision/CreateRevision';
 
 const Stack = createNativeStackNavigator();
 
@@ -40,6 +40,11 @@ const App = () => {
         name="HabitFrequency" 
         component={HabitFrequency} 
         options={{ title: 'Selecionar uma Frequência' }}
+        />
+        <Stack.Screen 
+        name="CreateRevision" 
+        component={CreateRevision} 
+        options={{ title: 'Criar uma revisão' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

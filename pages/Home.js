@@ -1,8 +1,10 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Appbar, BottomNavigation } from 'react-native-paper';
-import Geral from './Geral';
-import Habit from './Habit'
+import Geral from './Geral/Geral';
+import Habit from './Habit/Habit'
+import Revision from './Revision/Revision'
+import Progress from './Progress/Progress'
 const Home = ({ navigation }) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
@@ -15,8 +17,8 @@ const Home = ({ navigation }) => {
   const renderScene = BottomNavigation.SceneMap({
     geral: Geral,
     habitos: () => <Habit navigation={navigation} />,
-    revisoes: RevisoesRoute,
-    progresso: ProgressoRoute,
+    revisoes: () => <Revision navigation={navigation} />,
+    progresso: () => <Progress navigation={navigation} />,
   });
 
   return (

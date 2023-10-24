@@ -5,7 +5,7 @@ import { Button, Card, FAB } from 'react-native-paper';
 const Habit = ({navigation}) => {
 
     const [habits, setHabits] = useState([]);
-    const [tasks, setTasks] = useState([]);
+    
 
     const HabitCard = ({ habit }) => (
         <Card style={styles.card}>
@@ -14,12 +14,7 @@ const Habit = ({navigation}) => {
         </Card>
     );
 
-    const TaskCard = ({ task }) => (
-        <Card style={styles.card}>
-            <Text>{task.name}</Text>
-            <Button onPress={() => { /* Logic to mark task as completed */ }}>Concluir</Button>
-        </Card>
-    );
+    
 
 
     return (
