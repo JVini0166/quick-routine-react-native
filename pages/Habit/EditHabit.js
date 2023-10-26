@@ -15,8 +15,19 @@ const EditHabit = ({ navigation, route }) => {
     const [inputEndDate, setInputEndDate] = useState(new Date(habitData.targetDate));
     const [error, setError] = useState(null);
 
-    
+
     const { id, frequency = null, days = null, repeat = null } = route.params || {};
+
+    const deleteHabit = async () => {
+        let existingHabits = await AsyncStorage.getItem('habits');
+        existingHabits = existingHabits ? JSON.parse(existingHabits) : [];
+    
+        const updatedHabits = existingHabits.filter(h => h.id !== id);
+    
+        await AsyncStorage.setItem('habits', JSON.stringify(updatedHabits));
+        navigation.goBack();
+    };
+    
 
     const updateHabit = async () => {
         if (!habitName) {
@@ -90,13 +101,23 @@ const EditHabit = ({ navigation, route }) => {
                     style={styles.input}
                 />
                 {error && <Text style={{color: 'red', textAlign: 'center', marginVertical: 10}}>{error}</Text>}
-                <Button 
-                    style={styles.createButton}
-                    mode="contained"
-                    onPress={updateHabit} 
-                >
-                    Atualizar
-                </Button>
+                <View style={styles.buttonContainer}>
+                    <Button 
+                        style={styles.updateButton}
+                        mode="contained"
+                        onPress={updateHabit} 
+                    >
+                        Atualizar
+                    </Button>
+                    <Button 
+                        style={styles.deleteButton}
+                        mode="contained"
+                        color="red"
+                        onPress={deleteHabit} 
+                    >
+                        Excluir
+                    </Button>
+                </View>
             </View>
         </SafeAreaProvider>
     );
@@ -122,6 +143,19 @@ const styles = StyleSheet.create({
     createButton: {
         marginTop: 16,
         alignSelf: 'center',
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 16,
+    },
+    updateButton: {
+        flex: 1,
+        marginRight: 8, // para dar um pequeno espaço entre os botões
+    },
+    deleteButton: {
+        flex: 1,
+        marginLeft: 8, // para dar um pequeno espaço entre os botões
     },
 });
 export default EditHabit;
