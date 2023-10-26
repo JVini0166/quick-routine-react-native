@@ -10,6 +10,7 @@ import HabitFrequency from './pages/Habit/HabitFrequency';
 import CreateRevision from './pages/Revision/CreateRevision';
 import Pomodoro from './pages/Pomodoro/Pomodoro';
 import PomodoroSettings from './pages/Pomodoro/PomodoroSettings';
+import EditHabit from './pages/Habit/EditHabit';
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +58,11 @@ const App = () => {
         name="PomodoroSettings" 
         component={PomodoroSettings} 
         options={{ title: 'Configuração do Pomodoro' }}
+        />
+        <Stack.Screen 
+        name="EditHabit" 
+        component={EditHabit} 
+        options={{ title: 'Editar Hábito' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

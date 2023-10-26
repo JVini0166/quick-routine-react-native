@@ -1,20 +1,59 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Button, Card, FAB } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Habit = ({navigation}) => {
 
     const [habits, setHabits] = useState([]);
-    
 
-    const HabitCard = ({ habit }) => (
-        <Card style={styles.card}>
-            <Text>{habit.name}</Text>
-            <Button onPress={() => { /* Logic to mark habit as completed */ }}>Concluir</Button>
-        </Card>
+    useFocusEffect(
+        useCallback(() => {
+            const fetchHabits = async () => {
+                let storedHabits = await AsyncStorage.getItem('habits');
+                if (storedHabits) {
+                    setHabits(JSON.parse(storedHabits));
+                }
+            };
+            fetchHabits();
+
+            return () => {
+                // Limpar efeitos ou listeners se necessário ao sair da tela.
+            };
+        }, [])
     );
-
     
+
+    const HabitCard = ({ habit }) => {
+        const currentDay = new Date().getDate();
+
+        const handlePress = () => {
+            navigation.navigate('EditHabit', habit); // Passa os detalhes do hábito como parâmetros.
+        }
+
+        return (
+            <TouchableOpacity onPress={handlePress}>
+                <Card style={styles.card}>
+                    <View style={{flexDirection: 'column', flexGrow: 1}}>
+                        <Text>{habit.habit}</Text>
+                        <Text>{habit.frequency}</Text>
+                        <View style={{flexDirection: 'row', marginTop: 10}}>
+                            {[...Array(6)].map((_, index) => {
+                                const day = currentDay - 5 + index;
+                                return (
+                                    <View key={index} style={styles.dayBox}>
+                                        <Text>{['Seg', 'Ter', 'Quar', 'Quin', 'Sex'][new Date().getDay() - 5 + index]}</Text>
+                                        <Text>{day}</Text>
+                                    </View>
+                                );
+                            })}
+                        </View>
+                    </View>
+                </Card>
+            </TouchableOpacity>
+        );
+    };
 
 
     return (
@@ -54,6 +93,15 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0, // Isso deve empurrar o FAB para o canto inferior
     },
+    dayBox: {
+        width: 40,
+        height: 40,
+        borderWidth: 1,
+        borderColor: 'gray',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 2
+    }
 })
 
 export default Habit;

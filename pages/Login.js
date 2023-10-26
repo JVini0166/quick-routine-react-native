@@ -60,9 +60,7 @@ const Login = ({ navigation }) => {
                         <Text style={styles.linkText}>Criar uma nova conta</Text>
                     </TouchableOpacity>
                 </View>
-            </Card>
-
-            <View style={styles.socialLoginContainer}>
+                <View style={styles.socialLoginContainer}>
                 <Button
                     icon="google"
                     mode="outlined"
@@ -84,6 +82,9 @@ const Login = ({ navigation }) => {
                     Facebook
                 </Button>
             </View>
+            </Card>
+
+            
             
         </ScrollView>
         </LinearGradient>
@@ -136,7 +137,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 40,
+        marginBottom: 20,
     },
     logo: {
         width: 200,

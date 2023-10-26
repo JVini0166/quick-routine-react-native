@@ -6,49 +6,42 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
-const CreateHabit = ({ navigation, route }) => {
-    const [habitName, setHabitName] = useState(''); // <-- State for habit name
-    const [description, setDescription] = useState(''); // <-- State for description
-    const [inputStartDate, setInputStartDate] = useState(undefined);
-    const [inputEndDate, setInputEndDate] = useState(undefined);
+const EditHabit = ({ navigation, route }) => {
+    const habitData = route.params;
+
+    const [habitName, setHabitName] = useState(habitData.habit);
+    const [description, setDescription] = useState(habitData.description);
+    const [inputStartDate, setInputStartDate] = useState(new Date(habitData.initDate));
+    const [inputEndDate, setInputEndDate] = useState(new Date(habitData.targetDate));
     const [error, setError] = useState(null);
 
-    const { frequency = null, days = null, repeat = null } = route.params || {};
+    
+    const { id, frequency = null, days = null, repeat = null } = route.params || {};
 
-    const BACKEND_URL = "https://5000-jvini0166-quickroutinef-ha2qe54cevf.ws-us105.gitpod.io/quick-routine"
-
-    const createHabit = async () => {
-        if(!habitName) {
+    const updateHabit = async () => {
+        if (!habitName) {
             setError('Please enter a habit name.');
             return;
         }
-    
+
         let existingHabits = await AsyncStorage.getItem('habits');
-        if(!existingHabits) {
-            existingHabits = [];
-        } else {
-            existingHabits = JSON.parse(existingHabits);
-        }
-    
-        // If there are habits, get the last habit's ID and increment it, else start with 1.
-        const newId = existingHabits.length > 0 
-            ? (parseInt(existingHabits[existingHabits.length - 1].id) + 1).toString()
-            : "1";
-    
-        const newHabit = {
-            id: newId,
+        existingHabits = existingHabits ? JSON.parse(existingHabits) : [];
+
+        const updatedHabit = {
+            id: id,
             habit: habitName,
             description: description,
             frequency: frequency,
             initDate: inputStartDate,
             targetDate: inputEndDate
         };
-    
-        existingHabits.push(newHabit);
+
+        // Encontrar o índice do hábito a ser atualizado e substituí-lo
+        const habitIndex = existingHabits.findIndex(h => h.id === id);
+        existingHabits[habitIndex] = updatedHabit;
+
         await AsyncStorage.setItem('habits', JSON.stringify(existingHabits));
-    
-        // You can navigate or show a success message here
-        navigation.goBack(); // or other logic
+        navigation.goBack();
     };
 
     return (
@@ -100,11 +93,10 @@ const CreateHabit = ({ navigation, route }) => {
                 <Button 
                     style={styles.createButton}
                     mode="contained"
-                    onPress={createHabit} 
+                    onPress={updateHabit} 
                 >
-                    Criar
+                    Atualizar
                 </Button>
-                
             </View>
         </SafeAreaProvider>
     );
@@ -132,5 +124,4 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
     },
 });
-
-export default CreateHabit;
+export default EditHabit;
