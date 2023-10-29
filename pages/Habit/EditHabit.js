@@ -30,8 +30,50 @@ const EditHabit = ({ navigation, route }) => {
     
 
     const updateHabit = async () => {
+        setError(null); // Reseta o erro toda vez que a função é chamada
+
+        // Validação do nome do hábito
         if (!habitName) {
-            setError('Please enter a habit name.');
+            setError('Por favor, insira um nome para o hábito.');
+            return;
+        }
+
+        // Validação da descrição
+        if (!description) {
+            setError('Por favor, insira uma descrição.');
+            return;
+        }
+
+        // Validação da frequência
+        if (!frequency) {
+            setError('Por favor, selecione uma frequência.');
+            return;
+        }
+
+        // Validação da data inicial
+        if (!inputStartDate) {
+            setError('Por favor, selecione uma data de início.');
+            return;
+        }
+
+        const hoje = new Date();
+        hoje.setHours(0, 0, 0, 0); // Reseta a parte de hora, para comparar somente as datas
+
+        const dataInicio = new Date(inputStartDate); // Supondo que inputStartDate esteja em um formato válido de data
+        if (dataInicio < hoje) {
+            setError('A data de início não pode ser anterior ao dia atual.');
+            return;
+        }
+
+        // Validação da data alvo
+        if (!inputEndDate) {
+            setError('Por favor, selecione uma data alvo.');
+            return;
+        }
+
+        const dataAlvo = new Date(inputEndDate); // Supondo que inputEndDate esteja em um formato válido de data
+        if (dataAlvo < dataInicio) {
+            setError('A data alvo não pode ser anterior à data de início.');
             return;
         }
 
