@@ -120,12 +120,18 @@ const styles = StyleSheet.create({
         borderRadius: 5,
     },
     card: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
         borderColor: 'gray',
         borderWidth: 1,
         borderRadius: 5,
         marginBottom: 10,
+        elevation: 2,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 1,
+        },
+        shadowOpacity: 0.20,
+        shadowRadius: 1.41,
     },
     dayBox: {
         width: 40,

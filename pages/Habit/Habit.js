@@ -5,6 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import HabitCard from '../../components/HabitCard';
 import { LinearGradient } from 'expo-linear-gradient';
+import colors from '../../components/colors';
+
 
 const Habit = ({navigation}) => {
 
@@ -105,7 +107,7 @@ const Habit = ({navigation}) => {
     return (
         <LinearGradient 
             style={styles.container}
-            colors={['#02ad02', '#00FF00']} // DarkGreen to LimeGreen
+            colors={[colors.primary, colors.secondary]} // DarkGreen to LimeGreen
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
         >
@@ -148,7 +150,7 @@ const styles = StyleSheet.create({
         margin: 16,
         right: 0,
         bottom: 0,
-        backgroundColor: '#fcac04'
+        backgroundColor: colors.fab
     },
     overlay: {
         position: 'absolute',

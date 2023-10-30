@@ -5,6 +5,7 @@ import Geral from './Geral/Geral';
 import Habit from './Habit/Habit'
 import Revision from './Revision/Revision'
 import Progress from './Progress/Progress'
+import colors from '../components/colors'
 
 const Home = ({ navigation }) => {
   const [index, setIndex] = React.useState(0);
@@ -26,19 +27,20 @@ const Home = ({ navigation }) => {
     <View style={styles.container}>
       
       <Appbar.Header style={styles.appbarHeader}>
-        <Appbar.Content title="Quick Routine" />
-        <Appbar.Action icon="home" onPress={() => navigation.navigate('Home')} />
-        <Appbar.Action icon="timer" onPress={() => navigation.navigate('Pomodoro')} />
-        <Appbar.Action icon="information" onPress={() => navigation.navigate('Sobre')} />
-      </Appbar.Header>
+            <Appbar.Content title="Quick Routine" color={colors.primary} />
+            <Appbar.Action icon="home" onPress={() => navigation.navigate('Home')} color={colors.primary} />
+            <Appbar.Action icon="timer" onPress={() => navigation.navigate('Pomodoro')} color={colors.primary} />
+            <Appbar.Action icon="information" onPress={() => navigation.navigate('Sobre')} color={colors.primary} />
+        </Appbar.Header>
+
       
       <BottomNavigation
         navigationState={{ index, routes }}
         onIndexChange={setIndex}
         renderScene={renderScene}
-        activeColor="#0cdca4"
+        activeColor="#77b0fc"
         inactiveColor="#77b0fc"
-        barStyle={{ backgroundColor: '#048cdc' }}  // This sets the background color for the BottomNavigation
+        barStyle={{ backgroundColor: colors.background }}  // This sets the background color for the BottomNavigation
       />
     </View>
   );
@@ -64,8 +66,8 @@ const styles = StyleSheet.create({
     flex: 1
   },
   appbarHeader: {
-    backgroundColor: '#048cdc'  // This will set the background color of the Appbar.Header
-  }
+    backgroundColor: colors.background  // Atualizando para usar a cor do objeto importado
+}
 });
 
 export default Home;

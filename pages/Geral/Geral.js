@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import HabitCard from '../../components/HabitCard';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import colors from '../../components/colors';
 const Geral = () => {
     const [habits, setHabits] = useState([]);
 
@@ -28,9 +28,9 @@ const Geral = () => {
     return (
         <LinearGradient 
             style={styles.container}
-            colors={['#02ad02', '#00FF00']} // DarkGreen to LimeGreen
+            colors={[colors.primary, colors.secondary]} 
             start={{ x: 0, y: 0 }}
-            end={{ x: 1, y: 1 }}
+            end={{ x: 0, y: 1 }}
         >            
             <ScrollView style={styles.cardsContainer}>
                 {habits.map(habit => 
@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     },
     contentContainer: {
         alignItems: 'flex-start', // Alinha ao topo
-        flexDirection: 'row', // Assegura que os itens estejam na horizontal
+        flexDirection: 'row',
+        padding: 10 // Assegura que os itens estejam na horizontal
     },
     dateContainer: {
         width: 50,
