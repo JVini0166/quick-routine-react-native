@@ -84,7 +84,8 @@ const CreateHabit = ({ navigation, route }) => {
             description: description,
             frequency: frequency,
             initDate: inputStartDate,
-            targetDate: inputEndDate
+            targetDate: inputEndDate,
+            history: []
         };
     
         existingHabits.push(newHabit);

@@ -1,50 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
 import { Button, Card, FAB } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
+import HabitCard from '../../components/HabitCard';
 
 const Geral = () => {
-    const today = new Date();
-    const daysOfWeek = ['Dom.', 'Seg.', 'Ter.', 'Qua.', 'Qui.', 'Sex.', 'Sáb.'];
-
     const [habits, setHabits] = useState([]);
-    const [tasks, setTasks] = useState([]);
 
-    const [selectedDate, setSelectedDate] = useState(today);
+    useFocusEffect(
+        useCallback(() => {
+            const fetchHabits = async () => {
+                let storedHabits = await AsyncStorage.getItem('habits');
+                if (storedHabits) {
+                    setHabits(JSON.parse(storedHabits));
+                }
+            };
+            fetchHabits();
 
-    const week = generateWeek(today);
-
-    function generateWeek(referenceDate) {
-        let dates = [];
-        for (let i = -3; i <= 3; i++) {
-            let tempDate = new Date(referenceDate);
-            tempDate.setDate(referenceDate.getDate() + i);
-            dates.push(tempDate);
-        }
-        return dates;
-    }
-
-    const [buttonState, setButtonState] = useState('question'); // 'question', 'check', 'close'
-    
-    const handleButtonClick = () => {
-        if (buttonState === 'question') setButtonState('check');
-        else if (buttonState === 'check') setButtonState('close');
-        else setButtonState('question');
-    };
-
-
-    const HabitCard = ({ habit }) => (
-        <Card style={styles.card}>
-            <Text>{habit.name}</Text>
-            <Button onPress={() => { /* Logic to mark habit as completed */ }}>Concluir</Button>
-        </Card>
-    );
-
-    const TaskCard = ({ task }) => (
-        <Card style={styles.card}>
-            <Text>{task.name}</Text>
-            <Button onPress={() => { /* Logic to mark task as completed */ }}>Concluir</Button>
-        </Card>
+            return () => {
+                // Limpar efeitos ou listeners se necessário ao sair da tela.
+            };
+        }, [])
     );
 
     return (
@@ -54,9 +31,6 @@ const Geral = () => {
             <ScrollView style={styles.cardsContainer}>
                 {habits.map(habit => 
                     <HabitCard key={habit.id} habit={habit} />
-                )}
-                {tasks.map(task => 
-                    <TaskCard key={task.id} task={task} />
                 )}
             </ScrollView>
 
