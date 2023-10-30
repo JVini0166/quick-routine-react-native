@@ -88,12 +88,24 @@ const Habit = ({navigation}) => {
                             }}>
                                 <Text>Editar Hábito</Text>
                             </TouchableOpacity>
+                            <TouchableOpacity 
+                                onPress={() => {
+                                    navigation.navigate('HabitProgress');
+                                    setBottomSheetVisible(false);
+                                }}
+                                style={{ marginTop: 10 }}>
+                                <Text>Ver Progresso</Text>
+                            </TouchableOpacity>
     
                             <TouchableOpacity 
                                 onPress={() => setConfirmDeleteVisible(true)} 
                                 style={{ marginTop: 10 }}>
                                 <Text style={{ color: 'red' }}>Excluir Hábito</Text>
                             </TouchableOpacity>
+    
+                            {/* New TouchableOpacity for "Ver Progresso" */}
+                            
+    
                         </View>
                     </TouchableOpacity>
                 </View>
