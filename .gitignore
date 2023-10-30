@@ -41,7 +41,7 @@ yarn-error.*
 
 # dependencies
 node_modules/
-
+*.keystore
 # Expo
 .expo/
 dist/
