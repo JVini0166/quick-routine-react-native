@@ -1,40 +1,50 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Button, Card, FAB } from 'react-native-paper';
+import RevisionCard from '../../components/RevisionCard';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const Revision = ({ navigation }) => {
+    const [revisions, setRevisions] = useState([]);
 
-const Revision = ({navigation}) => {
+    useEffect(() => {
+        const fetchRevisions = async () => {
+            try {
+                const storedRevisions = await AsyncStorage.getItem('revisions');
+                if (storedRevisions) {
+                    setRevisions(JSON.parse(storedRevisions));
+                }
+            } catch (error) {
+                console.error('Failed to fetch revisions:', error);
+            }
+        };
 
-    const RevisionCard = ({ Revision }) => (
-        <Card style={styles.card}>
-            <Text>{Revision.name}</Text>
-            <Button onPress={() => { /* Logic to mark task as completed */ }}>Concluir</Button>
-        </Card>
-    );
+        fetchRevisions();
+    }, []);
 
-    const [revisions, setRevision] = useState([]);
     return (
         <View style={styles.container}>
-            {/* ... Rest of the date selection code ... */}
-            
             <ScrollView style={styles.cardsContainer}>
-                {revisions.map(revision => 
-                    <HabitCard key={revision.id} revision={revision} />
-                )}
+                {revisions.map((revision) => (
+                    <RevisionCard key={revision.id} revision={revision} />
+                ))}
             </ScrollView>
 
             <FAB
                 style={styles.fab}
                 icon="plus"
-                onPress={() => navigation.navigate('CreateRevision', {name: 'CreateRevision'})}
+                onPress={() => navigation.navigate('CreateRevision', { name: 'CreateRevision' })}
             />
         </View>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, // Isso garante que o ScrollView não expanda
+        flex: 1, 
+    },
+    cardsContainer: {
+        padding: 10,
     },
     card: {
         flexDirection: 'row',
@@ -48,8 +58,8 @@ const styles = StyleSheet.create({
         position: 'absolute',
         margin: 16,
         right: 0,
-        bottom: 0, // Isso deve empurrar o FAB para o canto inferior
+        bottom: 0, 
     },
-})
+});
 
 export default Revision;
