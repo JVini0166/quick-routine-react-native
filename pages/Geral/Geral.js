@@ -4,6 +4,7 @@ import { Button, Card, FAB } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import HabitCard from '../../components/HabitCard';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Geral = () => {
     const [habits, setHabits] = useState([]);
@@ -25,16 +26,18 @@ const Geral = () => {
     );
 
     return (
-        <View style={styles.container}>
-            {/* ... Rest of the date selection code ... */}
-            
+        <LinearGradient 
+            style={styles.container}
+            colors={['#02ad02', '#00FF00']} // DarkGreen to LimeGreen
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+        >            
             <ScrollView style={styles.cardsContainer}>
                 {habits.map(habit => 
                     <HabitCard key={habit.id} habit={habit} />
                 )}
             </ScrollView>
-
-        </View>
+        </LinearGradient>
     );
 };
 

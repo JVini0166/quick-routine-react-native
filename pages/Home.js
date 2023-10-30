@@ -9,10 +9,10 @@ import Progress from './Progress/Progress'
 const Home = ({ navigation }) => {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
-    { key: 'geral', title: 'Geral', icon: 'home' },
-    { key: 'habitos', title: 'Hábitos', icon: 'format-list-bulleted' },
-    { key: 'revisoes', title: 'Revisões', icon: 'calendar-check' },
-    { key: 'progresso', title: 'Progresso', icon: 'chart-line' },
+    { key: 'geral', title: 'Geral', focusedIcon: 'home', color: '#77b0fc' },
+    { key: 'habitos', title: 'Hábitos', focusedIcon: 'format-list-bulleted', color: '#77b0fc' },
+    { key: 'revisoes', title: 'Revisões', focusedIcon: 'calendar-check', color: '#77b0fc' },
+    { key: 'progresso', title: 'Progresso', focusedIcon: 'chart-line', color: '#0cdca4' },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
@@ -23,25 +23,22 @@ const Home = ({ navigation }) => {
   });
 
   return (
-
-    
-
     <View style={styles.container}>
       
-      <Appbar.Header>
+      <Appbar.Header style={styles.appbarHeader}>
         <Appbar.Content title="Quick Routine" />
         <Appbar.Action icon="home" onPress={() => navigation.navigate('Home')} />
         <Appbar.Action icon="timer" onPress={() => navigation.navigate('Pomodoro')} />
         <Appbar.Action icon="information" onPress={() => navigation.navigate('Sobre')} />
       </Appbar.Header>
       
-
-
-
       <BottomNavigation
         navigationState={{ index, routes }}
         onIndexChange={setIndex}
         renderScene={renderScene}
+        activeColor="#0cdca4"
+        inactiveColor="#77b0fc"
+        barStyle={{ backgroundColor: '#048cdc' }}  // This sets the background color for the BottomNavigation
       />
     </View>
   );
@@ -65,7 +62,10 @@ const styles = StyleSheet.create({
   },
   gradient: {
     flex: 1
-},
+  },
+  appbarHeader: {
+    backgroundColor: '#048cdc'  // This will set the background color of the Appbar.Header
+  }
 });
 
 export default Home;

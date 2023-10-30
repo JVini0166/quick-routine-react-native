@@ -4,7 +4,7 @@ import { Button, Card, FAB } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import HabitCard from '../../components/HabitCard';
-
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Habit = ({navigation}) => {
 
@@ -103,6 +103,12 @@ const Habit = ({navigation}) => {
     
 
     return (
+        <LinearGradient 
+            style={styles.container}
+            colors={['#02ad02', '#00FF00']} // DarkGreen to LimeGreen
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+        >
         <View style={styles.container}>
             {/* ... Rest of the date selection code ... */}
             
@@ -129,6 +135,7 @@ const Habit = ({navigation}) => {
             {renderBottomSheet()}
             {renderDeleteConfirmModal()}
         </View>
+        </LinearGradient>
     )
 }
 
@@ -141,6 +148,7 @@ const styles = StyleSheet.create({
         margin: 16,
         right: 0,
         bottom: 0,
+        backgroundColor: '#fcac04'
     },
     overlay: {
         position: 'absolute',

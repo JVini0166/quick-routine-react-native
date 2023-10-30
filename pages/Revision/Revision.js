@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-nati
 import { Button, Card, FAB } from 'react-native-paper';
 import RevisionCard from '../../components/RevisionCard';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 const Revision = ({ navigation }) => {
     const [revisions, setRevisions] = useState([]);
@@ -23,6 +25,12 @@ const Revision = ({ navigation }) => {
     }, []);
 
     return (
+        <LinearGradient 
+            style={styles.container}
+            colors={['#02ad02', '#00FF00']} // DarkGreen to LimeGreen
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+        >
         <View style={styles.container}>
             <ScrollView style={styles.cardsContainer}>
                 {revisions.map((revision) => (
@@ -36,6 +44,7 @@ const Revision = ({ navigation }) => {
                 onPress={() => navigation.navigate('CreateRevision', { name: 'CreateRevision' })}
             />
         </View>
+        </LinearGradient>
     );
 }
 
@@ -59,6 +68,7 @@ const styles = StyleSheet.create({
         margin: 16,
         right: 0,
         bottom: 0, 
+        backgroundColor: '#fcac04'
     },
 });
 
