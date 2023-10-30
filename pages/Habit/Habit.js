@@ -10,14 +10,32 @@ const Habit = ({navigation}) => {
 
     const [habits, setHabits] = useState([]);
 
+    const [confirmDeleteVisible, setConfirmDeleteVisible] = useState(false);
+
+    const fetchHabits = async () => {
+        let storedHabits = await AsyncStorage.getItem('habits');
+        if (storedHabits) {
+            setHabits(JSON.parse(storedHabits));
+        }
+    };
+
+    const deleteHabit = async (id) => {
+        let existingHabits = await AsyncStorage.getItem('habits');
+        existingHabits = existingHabits ? JSON.parse(existingHabits) : [];
+        
+        const updatedHabits = existingHabits.filter(h => h.id !== id);
+        
+        await AsyncStorage.setItem('habits', JSON.stringify(updatedHabits));
+
+        fetchHabits();
+        
+        setBottomSheetVisible(false);
+        setSelectedHabit(null);
+    };
+
     useFocusEffect(
         useCallback(() => {
-            const fetchHabits = async () => {
-                let storedHabits = await AsyncStorage.getItem('habits');
-                if (storedHabits) {
-                    setHabits(JSON.parse(storedHabits));
-                }
-            };
+            
             fetchHabits();
 
             return () => {
@@ -28,6 +46,33 @@ const Habit = ({navigation}) => {
 
     const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
     const [selectedHabit, setSelectedHabit] = useState(null);
+
+    const renderDeleteConfirmModal = () => {
+        if (confirmDeleteVisible && selectedHabit) {
+            return (
+                <View style={styles.overlay}>
+                    <View style={styles.modal}>
+                        <Text>Deseja mesmo excluir o hábito?</Text>
+                        <View style={{ flexDirection: 'row', marginTop: 20 }}>
+                            <Button onPress={() => setConfirmDeleteVisible(false)}>
+                                Não
+                            </Button>
+                            <Button 
+                                onPress={() => {
+                                    deleteHabit(selectedHabit.id);
+                                    setConfirmDeleteVisible(false);
+                                }} 
+                                style={{ marginLeft: 10 }}>
+                                Sim
+                            </Button>
+                        </View>
+                    </View>
+                </View>
+            );
+        }
+        return null;
+    };
+    
     
     const renderBottomSheet = () => {
         if (bottomSheetVisible && selectedHabit) {
@@ -39,7 +84,13 @@ const Habit = ({navigation}) => {
                                 navigation.navigate('EditHabit', selectedHabit);
                                 setBottomSheetVisible(false);
                             }}>
-                                <Text>Edit Habit</Text>
+                                <Text>Editar Hábito</Text>
+                            </TouchableOpacity>
+    
+                            <TouchableOpacity 
+                                onPress={() => setConfirmDeleteVisible(true)} 
+                                style={{ marginTop: 10 }}>
+                                <Text style={{ color: 'red' }}>Excluir Hábito</Text>
                             </TouchableOpacity>
                         </View>
                     </TouchableOpacity>
@@ -48,6 +99,7 @@ const Habit = ({navigation}) => {
         }
         return null;
     };
+    
     
 
     return (
@@ -75,6 +127,7 @@ const Habit = ({navigation}) => {
             />
 
             {renderBottomSheet()}
+            {renderDeleteConfirmModal()}
         </View>
     )
 }
@@ -107,6 +160,15 @@ const styles = StyleSheet.create({
         padding: 20,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
+    },
+    modal: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        width: '80%',
     }
     
 });

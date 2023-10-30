@@ -18,16 +18,6 @@ const EditHabit = ({ navigation, route }) => {
 
     const { id, frequency = null, days = null, repeat = null } = route.params || {};
 
-    const deleteHabit = async () => {
-        let existingHabits = await AsyncStorage.getItem('habits');
-        existingHabits = existingHabits ? JSON.parse(existingHabits) : [];
-    
-        const updatedHabits = existingHabits.filter(h => h.id !== id);
-    
-        await AsyncStorage.setItem('habits', JSON.stringify(updatedHabits));
-        navigation.goBack();
-    };
-    
 
     const updateHabit = async () => {
         setError(null); // Reseta o erro toda vez que a função é chamada
