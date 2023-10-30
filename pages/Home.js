@@ -4,7 +4,7 @@ import { Appbar, BottomNavigation } from 'react-native-paper';
 import Geral from './Geral/Geral';
 import Habit from './Habit/Habit'
 import Revision from './Revision/Revision'
-import Progress from './Progress/Progress'
+import Routine from './Routine/Routine'
 import colors from '../components/colors'
 
 const Home = ({ navigation }) => {
@@ -13,14 +13,14 @@ const Home = ({ navigation }) => {
     { key: 'geral', title: 'Geral', focusedIcon: 'home', color: '#77b0fc' },
     { key: 'habitos', title: 'Hábitos', focusedIcon: 'format-list-bulleted', color: '#77b0fc' },
     { key: 'revisoes', title: 'Revisões', focusedIcon: 'calendar-check', color: '#77b0fc' },
-    { key: 'progresso', title: 'Progresso', focusedIcon: 'chart-line', color: '#0cdca4' },
+    { key: 'routine', title: 'Rotina', focusedIcon: 'book', color: '#0cdca4' },
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
     geral: Geral,
     habitos: () => <Habit navigation={navigation} />,
     revisoes: () => <Revision navigation={navigation} />,
-    progresso: () => <Progress navigation={navigation} />,
+    routine: () => <Routine navigation={navigation} />,
   });
 
   return (
@@ -48,7 +48,7 @@ const Home = ({ navigation }) => {
 
 
 const RevisoesRoute = () => <Text>Revisões</Text>;
-const ProgressoRoute = () => <Text>Progresso</Text>;
+const RoutineRoute = () => <Text>Rotina</Text>;
 
 const styles = StyleSheet.create({
   container: {
