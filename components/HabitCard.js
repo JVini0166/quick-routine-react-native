@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Card } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const HabitCard = ({ habit, navigation }) => {
+const HabitCard = ({ habit, navigation, onSelect }) => {
 
     const currentDate = new Date();
     const currentDay = currentDate.getDate();
@@ -72,7 +72,7 @@ const HabitCard = ({ habit, navigation }) => {
     
 
     return (
-        <TouchableOpacity onPress={() => navigation.navigate('EditHabit', habit)} style={styles.cardTouchable}>
+        <TouchableOpacity onPress={onSelect} style={styles.cardTouchable}>
             <Card style={styles.card}>
                 <View style={{ flexDirection: 'column', flexGrow: 1, padding: 10 }}>
                     <Text style={styles.habitTitle}>{habit.habit}</Text>

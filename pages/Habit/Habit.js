@@ -26,6 +26,29 @@ const Habit = ({navigation}) => {
         }, [])
     );
 
+    const [bottomSheetVisible, setBottomSheetVisible] = useState(false);
+    const [selectedHabit, setSelectedHabit] = useState(null);
+    
+    const renderBottomSheet = () => {
+        if (bottomSheetVisible && selectedHabit) {
+            return (
+                <View style={styles.overlay}>
+                    <TouchableOpacity style={styles.fullScreenContainer} onPress={() => setBottomSheetVisible(false)}>
+                        <View style={styles.bottomSheet}>
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate('EditHabit', selectedHabit);
+                                setBottomSheetVisible(false);
+                            }}>
+                                <Text>Edit Habit</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+            );
+        }
+        return null;
+    };
+    
 
     return (
         <View style={styles.container}>
@@ -33,7 +56,15 @@ const Habit = ({navigation}) => {
             
             <ScrollView style={styles.cardsContainer}>
                 {habits.map(habit => 
-                    <HabitCard key={habit.id} habit={habit} navigation={navigation} />
+                    <HabitCard 
+                    key={habit.id} 
+                    habit={habit} 
+                    navigation={navigation}
+                    onSelect={() => {
+                        setSelectedHabit(habit);
+                        setBottomSheetVisible(true);
+                    }}
+                />
                 )}
             </ScrollView>
 
@@ -42,6 +73,8 @@ const Habit = ({navigation}) => {
                 icon="plus"
                 onPress={() => navigation.navigate('CreateHabit', {name: 'CreateHabit'})}
             />
+
+            {renderBottomSheet()}
         </View>
     )
 }
@@ -56,6 +89,26 @@ const styles = StyleSheet.create({
         right: 0,
         bottom: 0,
     },
+    overlay: {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        justifyContent: 'flex-end',
+    },
+    fullScreenContainer: {
+        flex: 1,
+        justifyContent: 'flex-end',
+    },
+    bottomSheet: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+    }
+    
 });
 
 export default Habit;
