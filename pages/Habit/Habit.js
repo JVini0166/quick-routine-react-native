@@ -90,7 +90,7 @@ const Habit = ({navigation}) => {
                             </TouchableOpacity>
                             <TouchableOpacity 
                                 onPress={() => {
-                                    navigation.navigate('HabitProgress');
+                                    navigation.navigate('HabitProgress', selectedHabit);
                                     setBottomSheetVisible(false);
                                 }}
                                 style={{ marginTop: 10 }}>

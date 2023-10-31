@@ -12,7 +12,7 @@ import Pomodoro from './pages/Pomodoro/Pomodoro';
 import PomodoroSettings from './pages/Pomodoro/PomodoroSettings';
 import EditHabit from './pages/Habit/EditHabit';
 import CreateRevisionTemplate from './pages/Revision/CreateRevisionTemplate';
-
+import HabitProgress from './pages/Habit/HabitProgress'
 
 const Stack = createNativeStackNavigator();
 
@@ -70,6 +70,11 @@ const App = () => {
         name="CreateRevisionTemplate" 
         component={CreateRevisionTemplate} 
         options={{ title: 'Criar Template de Revisão' }}
+        />
+        <Stack.Screen 
+        name="HabitProgress" 
+        component={HabitProgress} 
+        options={{ title: 'Ver Progresso' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
