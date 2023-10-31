@@ -141,14 +141,6 @@ const EditHabit = ({ navigation, route }) => {
                     >
                         Atualizar
                     </Button>
-                    <Button 
-                        style={styles.deleteButton}
-                        mode="contained"
-                        color="red"
-                        onPress={deleteHabit} 
-                    >
-                        Excluir
-                    </Button>
                 </View>
             </View>
         </SafeAreaProvider>
