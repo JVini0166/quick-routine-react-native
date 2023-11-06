@@ -32,7 +32,7 @@ const Geral = () => {
             start={{ x: 0, y: 0 }}
             end={{ x: 0, y: 1 }}
         >            
-            <ScrollView style={styles.cardsContainer}>
+            <ScrollView style={styles.cardsContainer}> {/* Aqui aplicamos o estilo de padding */}
                 {habits.map(habit => 
                     <HabitCard key={habit.id} habit={habit} />
                 )}
@@ -49,6 +49,9 @@ const styles = StyleSheet.create({
         alignItems: 'flex-start', // Alinha ao topo
         flexDirection: 'row',
         padding: 10 // Assegura que os itens estejam na horizontal
+    },
+    cardsContainer: {
+        padding: 10, // Isso vai adicionar padding em todos os lados do ScrollView
     },
     dateContainer: {
         width: 50,

@@ -34,9 +34,15 @@ const Revision = ({ navigation }) => {
         >
         <View style={styles.container}>
             <ScrollView style={styles.cardsContainer}>
-                {revisions.map((revision) => (
-                    <RevisionCard key={revision.id} revision={revision} />
-                ))}
+                    {revisions.map((revision) => (
+                        // Agora envolvendo o RevisionCard com TouchableOpacity
+                        <TouchableOpacity
+                            key={revision.id}
+                            onPress={() => navigation.navigate('RevisionProgress', { revisionId: revision.id })}
+                        >
+                            <RevisionCard revision={revision} navigation={navigation} />
+                        </TouchableOpacity>
+                    ))}
             </ScrollView>
 
             <FAB

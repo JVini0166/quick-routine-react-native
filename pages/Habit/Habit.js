@@ -129,14 +129,14 @@ const Habit = ({navigation}) => {
             <ScrollView style={styles.cardsContainer}>
                 {habits.map(habit => 
                     <HabitCard 
-                    key={habit.id} 
-                    habit={habit} 
-                    navigation={navigation}
-                    onSelect={() => {
-                        setSelectedHabit(habit);
-                        setBottomSheetVisible(true);
-                    }}
-                />
+                        key={habit.id} 
+                        habit={habit} 
+                        navigation={navigation}
+                        onSelect={() => {
+                            setSelectedHabit(habit);
+                            setBottomSheetVisible(true);
+                        }}
+                    />
                 )}
             </ScrollView>
 
@@ -156,6 +156,9 @@ const Habit = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    cardsContainer: {
+        padding: 10,
     },
     fab: {
         position: 'absolute',

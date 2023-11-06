@@ -70,6 +70,8 @@ const HabitCard = ({ habit, navigation, onSelect }) => {
         }
     };
     
+    
+
 
     return (
         <TouchableOpacity onPress={onSelect} style={styles.cardTouchable}>
