@@ -6,8 +6,11 @@ import { useFocusEffect } from '@react-navigation/native';
 import HabitCard from '../../components/HabitCard';
 import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../../components/colors';
+import DateSlider from '../../components/DateSlider';
+
 const Geral = () => {
     const [habits, setHabits] = useState([]);
+    const [selectedDate, setSelectedDate] = useState(new Date());
 
     useFocusEffect(
         useCallback(() => {
@@ -32,11 +35,16 @@ const Geral = () => {
             start={{ x: 0, y: 0 }}
             end={{ x: 0, y: 1 }}
         >            
+            <View style={styles.dateContainer}>
+        <DateSlider selectedDate={selectedDate} onDateSelect={setSelectedDate} />
+            </View>
+            <View style={styles.habitsContainer}>
             <ScrollView style={styles.cardsContainer}> {/* Aqui aplicamos o estilo de padding */}
                 {habits.map(habit => 
                     <HabitCard key={habit.id} habit={habit} />
                 )}
             </ScrollView>
+            </View>
         </LinearGradient>
     );
 };
