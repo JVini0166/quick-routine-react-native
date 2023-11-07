@@ -7,6 +7,7 @@ import HabitCard from '../../components/HabitCard';
 import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../../components/colors';
 import DateSlider from '../../components/DateSlider';
+import GeralHabitCard from '../../components/GeralHabitCard';
 
 const Geral = () => {
     const [habits, setHabits] = useState([]);
@@ -41,7 +42,7 @@ const Geral = () => {
             <View style={styles.habitsContainer}>
             <ScrollView style={styles.cardsContainer}> {/* Aqui aplicamos o estilo de padding */}
                 {habits.map(habit => 
-                    <HabitCard key={habit.id} habit={habit} />
+                    <GeralHabitCard habit={habit} />
                 )}
             </ScrollView>
             </View>
