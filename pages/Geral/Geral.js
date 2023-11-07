@@ -62,8 +62,6 @@ const styles = StyleSheet.create({
         padding: 10, // Isso vai adicionar padding em todos os lados do ScrollView
     },
     dateContainer: {
-        width: 50,
-        marginHorizontal: 5,
         alignItems: 'center',
     },
     dayOfWeek: {
