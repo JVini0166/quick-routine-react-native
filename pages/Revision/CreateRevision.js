@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { DatePickerInput } from 'react-native-paper-dates';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Dropdown } from 'react-native-element-dropdown';
+import { useFocusEffect } from '@react-navigation/native';
+
 
 const CreateRevision = ({ navigation, route }) => {
     const [revisionName, setRevisionName] = useState(''); // <-- State for revision name
@@ -12,17 +14,24 @@ const CreateRevision = ({ navigation, route }) => {
     const [inputStartDate, setInputStartDate] = useState(undefined);
     const [error, setError] = useState(null);
     const [revisionTemplates, setRevisionTemplates] = useState([]);
-
-    useEffect(() => {
-        const fetchRevisionTemplates = async () => {
-            const storedTemplates = await AsyncStorage.getItem('revisiontemplates');
-            if (storedTemplates) {
-                setRevisionTemplates(JSON.parse(storedTemplates));
-            }
-        };
     
-        fetchRevisionTemplates();
-    }, []);
+    const fetchRevisionTemplates = async () => {
+        const storedTemplates = await AsyncStorage.getItem('revisiontemplates');
+        if (storedTemplates) {
+            setRevisionTemplates(JSON.parse(storedTemplates));
+        }
+    };
+
+    useFocusEffect(
+        useCallback(() => {
+            
+            fetchRevisionTemplates();
+
+            return () => {
+                // Limpar efeitos ou listeners se necessário ao sair da tela.
+            };
+        }, [])
+    );
 
     const dropdownData = revisionTemplates.map(template => ({
         label: template.title,

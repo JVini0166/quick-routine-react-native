@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import { Button, Card, FAB } from 'react-native-paper';
 import RevisionCard from '../../components/RevisionCard';
+import { useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../../components/colors';  // Ajuste o caminho se necessário.
@@ -10,20 +11,29 @@ import colors from '../../components/colors';  // Ajuste o caminho se necessári
 const Revision = ({ navigation }) => {
     const [revisions, setRevisions] = useState([]);
 
-    useEffect(() => {
-        const fetchRevisions = async () => {
-            try {
-                const storedRevisions = await AsyncStorage.getItem('revisions');
-                if (storedRevisions) {
-                    setRevisions(JSON.parse(storedRevisions));
-                }
-            } catch (error) {
-                console.error('Failed to fetch revisions:', error);
-            }
-        };
 
-        fetchRevisions();
-    }, []);
+    const fetchRevisions = async () => {
+        try {
+            const storedRevisions = await AsyncStorage.getItem('revisions');
+            if (storedRevisions) {
+                setRevisions(JSON.parse(storedRevisions));
+            }
+        } catch (error) {
+            console.error('Failed to fetch revisions:', error);
+        }
+    };
+
+    useFocusEffect(
+        useCallback(() => {
+            
+            fetchRevisions();
+
+            return () => {
+                // Limpar efeitos ou listeners se necessário ao sair da tela.
+            };
+        }, [])
+    );
+
 
     return (
         <LinearGradient 
