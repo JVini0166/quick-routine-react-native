@@ -14,7 +14,7 @@ import EditHabit from './pages/Habit/EditHabit';
 import CreateRevisionTemplate from './pages/Revision/CreateRevisionTemplate';
 import HabitProgress from './pages/Habit/HabitProgress'
 import RevisionProgress from './pages/Revision/RevisionProgress'
-
+import Perfil from './pages/Perfil/Perfil'
 
 const Stack = createNativeStackNavigator();
 
@@ -82,6 +82,11 @@ const App = () => {
         name="RevisionProgress" 
         component={RevisionProgress} 
         options={{ title: 'Ver Progresso' }}
+        />
+        <Stack.Screen 
+        name="Perfil" 
+        component={Perfil} 
+        options={{ title: 'Perfil' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

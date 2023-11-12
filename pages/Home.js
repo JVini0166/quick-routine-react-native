@@ -12,10 +12,21 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const Home = ({ navigation }) => {
 
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const [userName, setUserName] = useState('');
+
 
   const toggleDrawer = () => setDrawerVisible(!drawerVisible);
 
   useEffect(() => {
+    const loadUserInfo = async () => {
+        const storedUserInfo = await AsyncStorage.getItem('userinfo');
+        if (storedUserInfo) {
+            const { name } = JSON.parse(storedUserInfo);
+            if (name) {
+                setUserName(name);
+            }
+        }
+    };
     const checkAndSyncData = async () => {
         try {
             const storedState = await AsyncStorage.getItem('state');
@@ -42,6 +53,7 @@ const Home = ({ navigation }) => {
         }
     };
 
+    loadUserInfo();
     checkAndSyncData();
 }, []);
 
@@ -100,28 +112,27 @@ const handleLogout = async () => {
       </Appbar.Header>
 
       {drawerVisible && (
-        <Drawer.Section>
-          <Drawer.Item 
-            label="Home"
-            onPress={() => navigation.navigate('Home')}
-          />
-          <Drawer.Item 
-            label="Perfil"
-            onPress={() => navigation.navigate('Perfil')}
-          />
-          <Drawer.Item 
-            label="Relatório"
-            onPress={() => navigation.navigate('Relatorio')}
-          />
-          <Drawer.Item 
-            label="Comunidade"
-            onPress={() => navigation.navigate('Comunidade')}
-          />
-          <Drawer.Item 
-            label="Sair"
-            onPress={handleLogout}
-          />
-        </Drawer.Section>
+            <Drawer.Section>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.titleText}>Bem-vindo {userName || '!'}</Text>
+                </View>
+                <Drawer.Item 
+                    label="Perfil"
+                    onPress={() => navigation.navigate('Perfil')}
+                />
+                <Drawer.Item 
+                    label="Relatório"
+                    onPress={() => navigation.navigate('Relatorio')}
+                />
+                <Drawer.Item 
+                    label="Comunidade"
+                    onPress={() => navigation.navigate('Comunidade')}
+                />
+                <Drawer.Item 
+                    label="Sair"
+                    onPress={handleLogout}
+                />
+            </Drawer.Section>
       )}
 
       <BottomNavigation
@@ -141,6 +152,13 @@ const RevisoesRoute = () => <Text>Revisões</Text>;
 const RoutineRoute = () => <Text>Rotina</Text>;
 
 const styles = StyleSheet.create({
+  titleContainer: {
+    alignItems: 'center', // Centraliza horizontalmente
+    padding: 10,
+  },
+  titleText: {
+    fontSize: 18, // Ajuste o tamanho da fonte conforme necessário
+  },
   container: {
     flex: 1,
   },
