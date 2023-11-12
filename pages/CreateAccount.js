@@ -30,6 +30,9 @@ const CreateAccount = ({ navigation }) => {
                     username: username,
                     password: password,
                     email: email,
+                    name: name,
+                    surname: surname, 
+                    login_method: 'app'
                 }),
             });
 

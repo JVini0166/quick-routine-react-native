@@ -51,6 +51,12 @@ const Login = ({ navigation }) => {
     
             const data = await response.json();
             await AsyncStorage.setItem('token', data.access_token);
+    
+            // Salvar user_info no AsyncStorage
+            if (data.user_info) {
+                await AsyncStorage.setItem('userinfo', JSON.stringify(data.user_info));
+            }
+    
             navigation.navigate('Home'); // Navegar para Home após o login bem-sucedido
         } catch (error) {
             console.error("Falha no login:", error.message);
