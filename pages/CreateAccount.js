@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Alert } from 'react-native';
-import { TextInput, Button, IconButton } from 'react-native-paper';
+import { View, Text, StyleSheet } from 'react-native';
+import { TextInput, Button } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 
 
@@ -13,6 +13,7 @@ const CreateAccount = ({ navigation }) => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [username, setUsername] = useState('');
 
+    const [responseMessage, setResponseMessage] = useState('');
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -39,14 +40,13 @@ const CreateAccount = ({ navigation }) => {
             const data = await response.json();
 
             if(response.ok) {
-                alert(data.message);
-                // Optionally navigate to another screen if needed
-                // navigation.navigate('SomeScreen');
+                setResponseMessage(data.message);
+                setTimeout(() => navigation.navigate('Login'), 3000); // Navega para Login após 3 segundos
             } else {
-                alert(`Error: ${data.message}`);
+                setResponseMessage(`Error: ${data.message}`);
             }
         } catch (error) {
-            alert('Error registering user: ' + error.message);
+            setResponseMessage('Error registering user: ' + error.message);
         }
     }
 
@@ -112,6 +112,9 @@ const CreateAccount = ({ navigation }) => {
             >
             Registrar
             </Button>
+            {responseMessage !== '' && (
+                <Text style={styles.responseMessage}>{responseMessage}</Text>
+            )}
         </View>
     );
 }
@@ -128,6 +131,11 @@ const styles = StyleSheet.create({
     registerButton: {
       marginBottom: 10,
       alignSelf: 'center',
+    },
+    responseMessage: {
+        marginTop: 20,
+        textAlign: 'center',
+        color: 'red', // Ajuste a cor conforme necessário
     },
 });
 
