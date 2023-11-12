@@ -1,17 +1,67 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image, Platform } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import { Button, Card, TextInput, FAB } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ActivityIndicator } from 'react-native';
 
 const Login = ({ navigation }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
-    
+    const [loading, setLoading] = useState(true); // Novo estado para loading
 
+    const BACKEND_URL = "https://5000-jvini0166-quickroutinef-72i8dbpw89n.ws-us106.gitpod.io/quick-routine"
+
+
+    useEffect(() => {
+        const checkToken = async () => {
+            try {
+                const token = await AsyncStorage.getItem('token');
+                if (token !== null && token !== undefined) {
+                    console.log(token);
+                    navigation.navigate('Home'); // Navegar para Home se o token for válido
+                } else {
+                    setLoading(false); // Esconde o loading se o token for inválido ou não existir
+                }
+            } catch (error) {
+                console.error("Erro ao verificar o token:", error);
+                setLoading(false); // Esconde o loading em caso de erro
+            }
+        };
     
+        checkToken();
+    }, []);
+
+    const login = async () => {
+        try {
+            const response = await fetch(BACKEND_URL + '/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, password }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Falha na resposta do servidor');
+            }
+    
+            const data = await response.json();
+            await AsyncStorage.setItem('token', data.access_token);
+            navigation.navigate('Home'); // Navegar para Home após o login bem-sucedido
+        } catch (error) {
+            console.error("Falha no login:", error.message);
+            // Aqui você pode adicionar uma mensagem de erro para o usuário, se necessário
+        }
+    };
+    
+    if (loading) {
+        return <ActivityIndicator size="large" color="#0000ff" />; // Tela de carregamento
+    }
+      
     return (
         <LinearGradient
         style={styles.gradient}
@@ -47,9 +97,9 @@ const Login = ({ navigation }) => {
                 <Button 
                     mode="contained" 
                     style={styles.loginButton}
-                    onPress={() => navigation.navigate('Home', { name: 'Home' })}
+                    onPress={login} // Usar a função de login atualizada
                 >
-                    Login
+                            Login
                 </Button>
 
                 <View style={styles.linkContainer}>

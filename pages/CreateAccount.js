@@ -11,12 +11,13 @@ const CreateAccount = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const [username, setUsername] = useState('');
 
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     
-    const BACKEND_URL = "https://5000-jvini0166-quickroutinef-ha2qe54cevf.ws-us105.gitpod.io/quick-routine"
+    const BACKEND_URL = "https://5000-jvini0166-quickroutinef-72i8dbpw89n.ws-us106.gitpod.io/quick-routine"
 
     const handleRegister = async () => {
         try {
@@ -26,7 +27,7 @@ const CreateAccount = ({ navigation }) => {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    username: `${name} ${surname}`,
+                    username: username,
                     password: password,
                     email: email,
                 }),
@@ -63,6 +64,14 @@ const CreateAccount = ({ navigation }) => {
                 style={styles.input}
                 value={surname}
                 onChangeText={setSurname}
+            />
+
+            <TextInput
+                label="Nome de Usuário"
+                mode="outlined"
+                style={styles.input}
+                value={username}
+                onChangeText={setUsername}
             />
 
             <TextInput
