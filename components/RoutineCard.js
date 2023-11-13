@@ -4,7 +4,7 @@ import { Card } from 'react-native-paper';
 
 const RoutineCard = ({ item }) => {
     return (
-        <Card style={styles.card}>
+        <Card style={styles.routineCard}>
             <Card.Content>
                 <Text style={styles.cardTitle}>{item.name}</Text>
                 <Text>Inicio: {item.initHour}</Text>
@@ -16,7 +16,8 @@ const RoutineCard = ({ item }) => {
 };
 
 const styles = StyleSheet.create({
-    card: {
+    routineCard: {
+        width: '100%',
         marginVertical: 5,
         padding: 10,
         borderRadius: 8,

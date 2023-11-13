@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
         width: '90%',
         marginVertical: 5,
         borderRadius: 8,
-        height: '25%',
+        height: 40,
         justifyContent: 'center',
     },
     cardContent: {
@@ -157,6 +157,9 @@ const styles = StyleSheet.create({
     cardText: {
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    routineList: {
+        width: '80%',
     },
     fab: {
         position: 'absolute',
