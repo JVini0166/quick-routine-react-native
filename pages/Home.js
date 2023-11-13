@@ -90,7 +90,6 @@ const handleLogout = async () => {
     { key: 'routine', title: 'Rotina', focusedIcon: 'book', color: '#0cdca4' },
     { key: 'habitos', title: 'Hábitos', focusedIcon: 'format-list-bulleted', color: '#77b0fc' },
     { key: 'revisoes', title: 'Revisões', focusedIcon: 'calendar-check', color: '#77b0fc' },
-    { key: 'tarefas', title: 'Tarefas', focusedIcon: 'calendar-check', color: '#77b0fc' },
     
   ]);
 
