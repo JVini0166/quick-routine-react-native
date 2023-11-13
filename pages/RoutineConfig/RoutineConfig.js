@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const RoutineConfig = ({ navigation }) => {
     const [startHour, setStartHour] = useState('');
@@ -8,6 +10,26 @@ const RoutineConfig = ({ navigation }) => {
     const [endHour, setEndHour] = useState('');
     const [endMinute, setEndMinute] = useState('');
     const [breakTime, setBreakTime] = useState('20');
+
+    useEffect(() => {
+        const loadSettings = async () => {
+            const settingsString = await AsyncStorage.getItem('routinesettings');
+            if (settingsString) {
+                const settings = JSON.parse(settingsString);
+                const { startTime, endTime, breakTime } = settings;
+                const [startHr, startMin] = startTime.split(':');
+                const [endHr, endMin] = endTime.split(':');
+
+                setStartHour(startHr);
+                setStartMinute(startMin);
+                setEndHour(endHr);
+                setEndMinute(endMin);
+                setBreakTime(breakTime);
+            }
+        };
+
+        loadSettings();
+    }, []);
 
     const saveRoutineSettings = async () => {
         const settings = {
@@ -61,16 +83,16 @@ const RoutineConfig = ({ navigation }) => {
             
             <Button 
                 mode="contained" 
-                onPress={saveRoutineSettings}
+                onPress={() => navigation.navigate("RoutineIntervals")}
                 style={styles.button}>
-                Salvar Configurações
+                Configurar Intervalos
             </Button>
 
             <Button 
                 mode="contained" 
-                onPress={() => navigation.navigate("RoutineIntervals")}
+                onPress={saveRoutineSettings}
                 style={styles.button}>
-                Configurar Intervalos
+                Salvar Configurações
             </Button>
         </ScrollView>
     );
