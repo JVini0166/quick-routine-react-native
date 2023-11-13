@@ -7,7 +7,7 @@ import Revision from './Revision/Revision'
 import Routine from './Routine/Routine'
 import colors from '../components/colors'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import Tasks from './Tasks/Tasks';
 
 const Home = ({ navigation }) => {
 
@@ -98,6 +98,7 @@ const handleLogout = async () => {
     routine: () => <Routine navigation={navigation} />,
     habitos: () => <Habit navigation={navigation} />,
     revisoes: () => <Revision navigation={navigation} />,
+    tarefas: () => <Tasks navigation={navigation} />,
   });
 
   return (

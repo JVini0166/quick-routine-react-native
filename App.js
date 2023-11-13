@@ -19,7 +19,7 @@ import RoutineConfig from './pages/RoutineConfig/RoutineConfig';
 import RoutineIntervals from './pages/RoutineConfig/RoutineIntervals';
 import CreateRoutineItem from './pages/Routine/CreateRoutineItem';
 import RoutineItemFrequency from './pages/Routine/RoutineItemFrequency';
-
+import CreateTask from './pages/Tasks/CreateTask';
 
 const Stack = createNativeStackNavigator();
 
@@ -112,6 +112,11 @@ const App = () => {
         name="RoutineItemFrequency" 
         component={RoutineItemFrequency} 
         options={{ title: 'Frequência da Rotina' }}
+        />
+        <Stack.Screen 
+        name="CreateTask" 
+        component={CreateTask} 
+        options={{ title: 'Criar Tarefa' }}
         />
       </Stack.Navigator>
     </NavigationContainer>
