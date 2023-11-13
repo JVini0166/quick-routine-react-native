@@ -39,8 +39,25 @@ const CreateRoutineItem = ({ navigation, route }) => {
                 }
             }).filter(day => day); // Filtra dias vazios
         }
+
+        const routineDataString = await AsyncStorage.getItem('routine');
+        let routineData = routineDataString ? JSON.parse(routineDataString) : {
+            seg: [], ter: [], qua: [], qui: [], sex: [], sab: [], dom: []
+        };
+
+        let maxId = 0;
+        Object.keys(routineData).forEach(day => {
+            routineData[day].forEach(item => {
+                const itemId = parseInt(item.id, 10);
+                if (itemId > maxId) {
+                    maxId = itemId;
+                }
+            });
+        });
+        const newId = maxId + 1;
     
         const newRoutineItem = {
+            id: newId.toString(),
             name: itemName,
             description: description,
             initHour: `${startHour}:${startMinute || '00'}`,
@@ -48,19 +65,14 @@ const CreateRoutineItem = ({ navigation, route }) => {
             frequency: frequencyArray,
             history: [],
         };
-    
+        
+        frequencyArray.forEach(day => {
+            if (routineData[day]) {
+                routineData[day].push(newRoutineItem);
+            }
+        });
+
         try {
-            const routineDataString = await AsyncStorage.getItem('routine');
-            let routineData = routineDataString ? JSON.parse(routineDataString) : {
-                seg: [], ter: [], qua: [], qui: [], sex: [], sab: [], dom: []
-            };
-    
-            frequencyArray.forEach(day => {
-                if (routineData[day]) {
-                    routineData[day].push(newRoutineItem);
-                }
-            });
-    
             await AsyncStorage.setItem('routine', JSON.stringify(routineData));
             navigation.goBack();
         } catch (error) {
