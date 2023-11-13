@@ -75,14 +75,23 @@ const Revision = ({ navigation }) => {
                                 setBottomSheetVisible(false);
                             }}>
                                 <Text>Editar Revisão</Text>
+                            </TouchableOpacity>
+    
+                            {/* Opção Ver Progresso */}
+                            <TouchableOpacity onPress={() => {
+                                navigation.navigate('RevisionProgress', selectedRevision.id);
+                                setBottomSheetVisible(false);
+                            }} style={{ marginTop: 10 }}>
+                                <Text>Ver Progresso</Text>
+                            </TouchableOpacity>
+    
+                            {/* Opção Excluir Revisão */}
                             <TouchableOpacity onPress={() => {
                                 deleteRevision(selectedRevision.id);
-                                setConfirmDeleteVisible(true);}
-                                } style={{ marginTop: 10 }}>
+                                setConfirmDeleteVisible(true);
+                            }} style={{ marginTop: 10 }}>
                                 <Text style={{ color: 'red' }}>Excluir Revisão</Text>
                             </TouchableOpacity>
-                            </TouchableOpacity>
-                            {/* Adicione mais opções aqui conforme necessário */}
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -90,6 +99,7 @@ const Revision = ({ navigation }) => {
         }
         return null;
     };
+    
 
     useFocusEffect(
         useCallback(() => {

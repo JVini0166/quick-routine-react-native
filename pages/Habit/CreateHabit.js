@@ -74,7 +74,10 @@ const CreateHabit = ({ navigation, route }) => {
         }
     
         // If there are habits, get the last habit's ID and increment it, else start with 1.
-        xx
+
+        const newId = existingHabits.length > 0 
+            ? (parseInt(existingHabits[existingHabits.length - 1].id) + 1).toString()
+            : "1";
     
         const newHabit = {
             id: newId,

@@ -6,9 +6,19 @@ import colors from '../../components/colors'; // Ajuste o caminho se necessário
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons'; // Certifique-se de instalar essa biblioteca.
 
 const RevisionProgress = ({ navigation, route }) => {
-    const { revisionId } = route.params;
+    const revisionId  = route.params;
     const [revision, setRevision] = useState(null);
 
+    const [revisionStatuses, setRevisionStatuses] = useState({});
+
+    const handleStatusChange = (date, status) => {
+        setRevisionStatuses(prevStatuses => ({
+            ...prevStatuses,
+            [date]: status
+        }));
+    };
+
+    
     useEffect(() => {
         const fetchRevision = async () => {
             try {
@@ -41,15 +51,20 @@ const RevisionProgress = ({ navigation, route }) => {
             </Card>
 
             {revision.revisionDates.map((date, index) => (
-                <Card key={index} style={styles.card}>
+                <Card 
+                    key={index} 
+                    style={[
+                        styles.card, 
+                        { backgroundColor: revisionStatuses[date] === 'certo' ? 'green' : revisionStatuses[date] === 'errado' ? 'red' : 'white' }
+                    ]}
+                >
                     <View style={styles.revisionDateContainer}>
                         <Text>{new Date(date).toLocaleDateString()}</Text>
                         <View style={styles.iconsContainer}>
-                            {/* Substitua 'check-circle' e 'close-circle' pelos ícones corretos de sua escolha */}
-                            <TouchableOpacity onPress={() => console.log('Correct pressed for', date)}>
+                            <TouchableOpacity onPress={() => handleStatusChange(date, 'certo')}>
                                 <Icon name="check-circle" size={24} color="green" />
                             </TouchableOpacity>
-                            <TouchableOpacity onPress={() => console.log('Wrong pressed for', date)}>
+                            <TouchableOpacity onPress={() => handleStatusChange(date, 'errado')}>
                                 <Icon name="close-circle" size={24} color="red" />
                             </TouchableOpacity>
                         </View>

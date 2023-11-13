@@ -11,7 +11,8 @@ const HabitProgress = ({ navigation, route }) => {
     const initDateObj = new Date(habit.initDate);
     const targetDateObj = new Date(habit.targetDate);
     const totalTime = targetDateObj - initDateObj;
-    const elapsedTime = today - initDateObj;
+    
+
     const progress = Math.min(elapsedTime / totalTime, 1);
 
     // ProgressChart
@@ -45,6 +46,7 @@ const HabitProgress = ({ navigation, route }) => {
 
     // DataTable
     const today = new Date();
+    const elapsedTime = today - initDateObj;
     const thisWeekCount = habit.history.filter(entry => {
         const entryDate = new Date(entry.date);
         return entry.value === 1 && (today - entryDate) <= 7 * 24 * 60 * 60 * 1000;
@@ -81,10 +83,12 @@ const HabitProgress = ({ navigation, route }) => {
                 <Card.Content>
                     <Text>Progress Counter</Text>
                     <ProgressBar progress={progress} />
-                    <View style={styles.dateContainer}>
-                        <Text style={styles.dateText}>{habit.initDate.slice(0, 10)}</Text>
-                        <Text style={styles.dateText}>{habit.targetDate.slice(0, 10)}</Text>
-                    </View>
+                    <Text style={styles.dateText}>
+                        {habit.initDate ? habit.initDate.slice(0, 10) : "Data não disponível"}
+                    </Text>
+                    <Text style={styles.dateText}>
+                        {habit.targetDate ? habit.targetDate.slice(0, 10) : "Data não disponível"}
+                    </Text>
                 </Card.Content>
             </Card>
             {/* Consecutive Days Card */}
