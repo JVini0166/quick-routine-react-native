@@ -8,11 +8,60 @@ import { LinearGradient } from 'expo-linear-gradient';
 import colors from '../../components/colors';
 import DateSlider from '../../components/DateSlider';
 import GeralHabitCard from '../../components/GeralHabitCard';
+import GeralRoutineCard from '../../components/GeralRoutineCard';
+import GeralRevisionCard from '../../components/GeralRevisionCard';
+import GeralTaskCard from '../../components/GeralTaskCard';
 
 const Geral = () => {
     const [habits, setHabits] = useState([]);
+    const [routines, setRoutines] = useState({});
     const [selectedDate, setSelectedDate] = useState(new Date());
+    const [revisions, setRevisions] = useState([]);
+    const [tasks, setTasks] = useState([]);
 
+    const getDayOfWeek = (date) => {
+        const days = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sab'];
+        return days[date.getDay()];
+    };
+
+    const fetchRevisions = async () => {
+        try {
+            const storedRevisions = await AsyncStorage.getItem('revisions');
+            if (storedRevisions) {
+                setRevisions(JSON.parse(storedRevisions));
+            }
+        } catch (error) {
+            console.error('Failed to fetch revisions:', error);
+        }
+    };
+
+    const fetchRoutines = async () => {
+        try {
+            const storedRoutines = await AsyncStorage.getItem('routine');
+            if (storedRoutines) {
+                setRoutines(JSON.parse(storedRoutines));
+            }
+        } catch (error) {
+            console.error('Failed to fetch routines:', error);
+        }
+    };
+
+    const filteredRoutines = () => {
+        const dayOfWeek = getDayOfWeek(selectedDate);
+        return routines[dayOfWeek] || []; // Retorna as rotinas para o dia da semana ou um array vazio
+    };
+
+    const fetchTasks = async () => {
+        try {
+            const storedTasks = await AsyncStorage.getItem('tasks');
+            if (storedTasks) {
+                setTasks(JSON.parse(storedTasks));
+            }
+        } catch (error) {
+            console.error('Failed to fetch tasks:', error);
+        }
+    };
+    
     useFocusEffect(
         useCallback(() => {
             const fetchHabits = async () => {
@@ -22,6 +71,9 @@ const Geral = () => {
                 }
             };
             fetchHabits();
+            fetchRoutines();
+            fetchRevisions();
+            fetchTasks(); 
 
             return () => {
                 // Limpar efeitos ou listeners se necessário ao sair da tela.
@@ -43,6 +95,21 @@ const Geral = () => {
             <ScrollView style={styles.cardsContainer}> {/* Aqui aplicamos o estilo de padding */}
                 {habits.map(habit => 
                     <GeralHabitCard habit={habit} />
+                )}
+            </ScrollView>
+            <ScrollView style={styles.cardsContainer}>
+                {filteredRoutines().map(routine => 
+                    <GeralRoutineCard key={routine.name} routine={routine} />
+                )}
+            </ScrollView>
+            <ScrollView style={styles.cardsContainer}>
+                {revisions.map(revision => 
+                    <GeralRevisionCard key={revision.id} revision={revision} />
+                )}
+            </ScrollView>
+            <ScrollView style={styles.cardsContainer}>
+                {tasks.map(task => 
+                    <GeralTaskCard key={task.id} task={task} />
                 )}
             </ScrollView>
             </View>

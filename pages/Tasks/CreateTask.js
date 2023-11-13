@@ -51,7 +51,8 @@ const CreateTask = ({ navigation }) => {
             description: description,
             hourAndMinute: formattedTime,
             date: formattedDate,
-            keepPendent: checked
+            keepPendent: checked,
+            history: [],
         };
     
         // Salvando a tarefa no AsyncStorage

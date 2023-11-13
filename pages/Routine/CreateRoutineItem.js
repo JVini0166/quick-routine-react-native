@@ -45,7 +45,8 @@ const CreateRoutineItem = ({ navigation, route }) => {
             description: description,
             initHour: `${startHour}:${startMinute || '00'}`,
             endHour: `${endHour}:${endMinute || '00'}`,
-            frequency: frequencyArray
+            frequency: frequencyArray,
+            history: [],
         };
     
         try {

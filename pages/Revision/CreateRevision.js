@@ -93,6 +93,7 @@ const CreateRevision = ({ navigation, route }) => {
             description: description,
             initDate: inputStartDate,
             revisionDates: revisionDates,
+            history: []
         };
     
         existingRevisions.push(newRevision);
