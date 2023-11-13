@@ -26,9 +26,44 @@ const CreateTask = ({ navigation }) => {
     };
 
     const createTask = async () => {
-        // Lógica para criar a tarefa
-        // Salvar no AsyncStorage, etc.
+        if (!taskTitle) {
+            // Aqui você pode definir uma lógica para mostrar um erro se o título estiver vazio
+            return;
+        }
+    
+        // Formatando hora e minuto
+        const formattedTime = `${estimatedTimeHour.padStart(2, '0')}:${estimatedTimeMinute.padStart(2, '0')}`;
+    
+        // Formatando a data
+        const formattedDate = taskDate ? taskDate.toISOString().split('T')[0] : '';
+
+        let existingTasks = await AsyncStorage.getItem('tasks');
+    existingTasks = existingTasks ? JSON.parse(existingTasks) : [];
+
+    const newId = existingTasks.length > 0 
+    ? (parseInt(existingTasks[existingTasks.length - 1].id) + 1).toString()
+    : "1";
+    
+        // Criando objeto da tarefa
+        const task = {
+            id: newId, // Garantir que o ID seja uma string
+            name: taskTitle,
+            description: description,
+            hourAndMinute: formattedTime,
+            date: formattedDate,
+            keepPendent: checked
+        };
+    
+        // Salvando a tarefa no AsyncStorage
+        try {
+            existingTasks.push(task);
+            await AsyncStorage.setItem('tasks', JSON.stringify(existingTasks));
+            navigation.goBack();
+        } catch (error) {
+            // Tratar o erro, por exemplo, exibindo uma mensagem para o usuário
+        }
     };
+    
 
     return (
         <SafeAreaProvider>
