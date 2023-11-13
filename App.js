@@ -17,6 +17,9 @@ import RevisionProgress from './pages/Revision/RevisionProgress'
 import Perfil from './pages/Perfil/Perfil'
 import RoutineConfig from './pages/RoutineConfig/RoutineConfig';
 import RoutineIntervals from './pages/RoutineConfig/RoutineIntervals';
+import CreateRoutineItem from './pages/Routine/CreateRoutineItem';
+import RoutineItemFrequency from './pages/Routine/RoutineItemFrequency';
+
 
 const Stack = createNativeStackNavigator();
 
@@ -99,6 +102,16 @@ const App = () => {
         name="RoutineIntervals" 
         component={RoutineIntervals} 
         options={{ title: 'Intervalos de Rotina' }}
+        />
+        <Stack.Screen 
+        name="CreateRoutineItem" 
+        component={CreateRoutineItem} 
+        options={{ title: 'Criar Item de Rotina' }}
+        />
+        <Stack.Screen 
+        name="RoutineItemFrequency" 
+        component={RoutineItemFrequency} 
+        options={{ title: 'Frequência da Rotina' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

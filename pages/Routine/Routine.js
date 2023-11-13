@@ -1,16 +1,59 @@
-import React, { useState, useCallback } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
-import { Card } from 'react-native-paper';
+import React, { useState, useCallback, useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ScrollView, Button } from 'react-native';
+import { Card, FAB } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../../components/colors';
 import { useFocusEffect } from '@react-navigation/native';
-import WeekdaySlider from '../../components/WeekdaySlider';
+import RoutineCard from '../../components/RoutineCard';
 
 
 const Routine = ({ navigation }) => {
     const [hasSettings, setHasSettings] = useState(false);
     const [routineSettings, setRoutineSettings] = useState({});
+
+    const [selectedDay, setSelectedDay] = useState(null);
+    const [dailyRoutines, setDailyRoutines] = useState([]);
+    const weekdays = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
+
+
+    useEffect(() => {
+        const today = new Date();
+        today.setHours(today.getHours() - 3); // Ajuste para o fuso horário de Brasília
+        const dayIndex = today.getDay();
+        const dayName = weekdays[dayIndex];
+        setSelectedDay(dayName); // Configura o dia selecionado inicialmente
+        const lowerCaseDay = dayName.toLowerCase();
+        updateDailyRoutines(lowerCaseDay);
+    }, []);
+
+    const handleSelectDay = (day) => {
+        const lowerCaseDay = day.toLowerCase();
+        updateDailyRoutines(lowerCaseDay);
+        setSelectedDay(day);
+    };
+
+    const WeekdayBox = ({ day }) => {
+        const isSelected = day === selectedDay;
+        return (
+            <TouchableOpacity
+                style={[styles.weekdayBox, isSelected && styles.selectedBox]}
+                onPress={() => handleSelectDay(day)}
+            >
+                <Text>{day}</Text>
+            </TouchableOpacity>
+        );
+    };
+    
+    const updateDailyRoutines = async (day) => {
+        const routineString = await AsyncStorage.getItem('routine');
+        const routine = routineString ? JSON.parse(routineString) : {};
+        if (day && routine[day]) {
+            setDailyRoutines(routine[day]);
+        } else {
+            setDailyRoutines([]);
+        }
+    };
 
     useFocusEffect(
         useCallback(() => {
@@ -37,7 +80,16 @@ const Routine = ({ navigation }) => {
             end={{ x: 0, y: 1 }}
         >
             <View style={styles.topContainer}>
-                <WeekdaySlider onDaySelect={(day) => console.log(day)} />
+                <ScrollView
+                    horizontal={true}
+                    style={styles.weekdayContainer}
+                    showsHorizontalScrollIndicator={false}
+                    contentContainerStyle={styles.contentContainer}
+                >
+                    {weekdays.map((day, index) => (
+                        <WeekdayBox key={index} day={day} />
+                    ))}
+                </ScrollView>
                 {hasSettings ? (
                     <>
                         <Card style={styles.card}>
@@ -47,6 +99,15 @@ const Routine = ({ navigation }) => {
                                 </Text>
                             </View>
                         </Card>
+                        <ScrollView style={styles.routineList}>
+                        {dailyRoutines.length > 0 ? (
+                            dailyRoutines.sort((a, b) => a.initHour.localeCompare(b.initHour)).map((item, index) => (
+                                <RoutineCard key={`${item.name}-${index}`} item={item} />
+                            ))
+                        ) : (
+                            <Text style={styles.noRoutineText}>Nenhum item de rotina para este dia.</Text>
+                        )}
+                        </ScrollView>
                         <Card style={styles.card}>
                             <View style={styles.cardContent}>
                                 <Text style={styles.cardText}>
@@ -54,7 +115,7 @@ const Routine = ({ navigation }) => {
                                 </Text>
                             </View>
                         </Card>
-                    </>
+                        </>
                 ) : (
                     <Button
                         title="Configurar Rotina"
@@ -62,6 +123,13 @@ const Routine = ({ navigation }) => {
                     />
                 )}
             </View>
+            {hasSettings && (
+                <FAB
+                    style={styles.fab}
+                    icon="plus"
+                    onPress={() => navigation.navigate('CreateRoutineItem', { name: 'CreateRoutineItem' })}
+                />
+            )}
         </LinearGradient>
     );
 };
@@ -79,7 +147,7 @@ const styles = StyleSheet.create({
         width: '90%',
         marginVertical: 5,
         borderRadius: 8,
-        height: '25%', // Ajuste a altura conforme necessário
+        height: '25%',
         justifyContent: 'center',
     },
     cardContent: {
@@ -89,6 +157,38 @@ const styles = StyleSheet.create({
     cardText: {
         fontSize: 16,
         fontWeight: 'bold',
+    },
+    fab: {
+        position: 'absolute',
+        margin: 16,
+        right: 0,
+        bottom: 0, 
+        backgroundColor: colors.fab
+    },
+    noRoutineText: {
+        textAlign: 'center',
+    },
+    weekdayContainer: {
+        flexDirection: 'row',
+        paddingVertical: 10,
+    },
+    contentContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    weekdayBox: {
+        width: 40,
+        height: 40,
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 5,
+        marginHorizontal: 5,
+    },
+    selectedBox: {
+        borderColor: 'green',
+        backgroundColor: 'lightgreen', // ou outra cor para destacar o dia selecionado
     },
 });
 
