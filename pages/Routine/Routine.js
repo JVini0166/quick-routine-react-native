@@ -5,6 +5,8 @@ import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import colors from '../../components/colors';
 import { useFocusEffect } from '@react-navigation/native';
+import WeekdaySlider from '../../components/WeekdaySlider';
+
 
 const Routine = ({ navigation }) => {
     const [hasSettings, setHasSettings] = useState(false);
@@ -34,7 +36,8 @@ const Routine = ({ navigation }) => {
             start={{ x: 0, y: 0 }}
             end={{ x: 0, y: 1 }}
         >
-            <View style={styles.cardsContainer}>
+            <View style={styles.topContainer}>
+                <WeekdaySlider onDaySelect={(day) => console.log(day)} />
                 {hasSettings ? (
                     <>
                         <Card style={styles.card}>
@@ -67,7 +70,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    cardsContainer: {
+    topContainer: {
         width: '100%',
         alignItems: 'center',
         paddingTop: 10,
@@ -76,7 +79,7 @@ const styles = StyleSheet.create({
         width: '90%',
         marginVertical: 5,
         borderRadius: 8,
-        height: '40%',
+        height: '25%', // Ajuste a altura conforme necessário
         justifyContent: 'center',
     },
     cardContent: {
