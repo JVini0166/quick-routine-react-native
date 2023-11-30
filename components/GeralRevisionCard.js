@@ -13,13 +13,13 @@ const GeralRevisionCard = ({ revision }) => {
     const getButtonContent = () => {
         switch (buttonState) {
             case 0:
-                return { icon: 'question', color: 'yellow' };
+                return { icon: 'question', color: '#f2cb15' };
             case 1:
                 return { icon: 'check', color: 'green' };
             case 2:
                 return { icon: 'close', color: 'red' };
             default:
-                return { icon: 'question', color: 'yellow' };
+                return { icon: 'question', color: '#f2cb15' };
         }
     };
 
@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     rightButton: {
         padding: 10,
         borderRadius: 5,
-        marginRight: 0,
+        marginLeft: 200, // Adiciona um espaçamento entre o botão e o conteúdo da esquerda
     },
 });
 

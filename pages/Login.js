@@ -5,6 +5,8 @@ import { Button, Card, TextInput, FAB } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ActivityIndicator } from 'react-native';
+import Envs from '../components/Envs';
+
 
 const Login = ({ navigation }) => {
     const [username, setUsername] = useState('');
@@ -13,7 +15,7 @@ const Login = ({ navigation }) => {
 
     const [loading, setLoading] = useState(true); // Novo estado para loading
 
-    const BACKEND_URL = "https://5000-jvini0166-quickroutinef-72i8dbpw89n.ws-us106.gitpod.io/quick-routine"
+    const BACKEND_URL = Envs.BACKEND_URL;
 
 
     useEffect(() => {

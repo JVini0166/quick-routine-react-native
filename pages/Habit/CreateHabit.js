@@ -4,6 +4,8 @@ import { Button, TextInput } from 'react-native-paper';
 import { DatePickerInput } from 'react-native-paper-dates';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Envs from '../../components/Envs';
+import colors from '../../components/colors';
 
 
 const CreateHabit = ({ navigation, route }) => {
@@ -15,7 +17,7 @@ const CreateHabit = ({ navigation, route }) => {
 
     const { frequency = null, days = null, repeat = null } = route.params || {};
 
-    const BACKEND_URL = "https://5000-jvini0166-quickroutinef-ha2qe54cevf.ws-us105.gitpod.io/quick-routine"
+    const BACKEND_URL = Envs.BACKEND_URL;
 
     const createHabit = async () => {
          
@@ -158,7 +160,15 @@ const CreateHabit = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
+        padding: 10,
+        backgroundColor: colors.background,
+    },
+    card: {
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 5,
+        marginBottom: 10,
+        padding: 10,
     },
     input: {
         height: 60,
@@ -166,6 +176,8 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginTop: 8,
         paddingHorizontal: 8,
+        backgroundColor: '#f5f5f5', // Um cinza claro quase branco
+        color: 'black', // Certifique-se de que a cor do texto seja legível
     },
     label: {
         fontSize: 16,

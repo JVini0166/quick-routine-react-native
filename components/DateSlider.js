@@ -1,8 +1,8 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ScrollView, Text, TouchableOpacity, StyleSheet, Dimensions, View } from 'react-native';
 
+
 const DateSlider = ({ selectedDate, onDateSelect }) => {
-    // Adicionando uma referência ao ScrollView
     const scrollViewRef = useRef();
     const [dayBoxWidth, setDayBoxWidth] = useState(0);
 
@@ -20,7 +20,10 @@ const DateSlider = ({ selectedDate, onDateSelect }) => {
 
     const DayBox = ({ date }) => {
         const isSelected = date.toDateString() === selectedDate.toDateString();
-        const dayOfWeek = date.toDateString().substring(0, 3);
+        
+        // Modifique esta linha para obter o dia da semana em português
+        const dayOfWeek = date.toLocaleDateString('pt-BR', { weekday: 'short' });
+
         return (
             <TouchableOpacity
                 style={[styles.dateBox, isSelected && styles.selectedDate]}
@@ -32,13 +35,8 @@ const DateSlider = ({ selectedDate, onDateSelect }) => {
         );
     };
 
-    // Deslocamento para centralizar o dia selecionado
     const scrollToSelectedDate = (width) => {
-        // Calcula o deslocamento baseado na largura do dispositivo e do DayBox
         const offset = (Dimensions.get('window').width / 2) - (width / 2);
-
-        // A posição de rolagem é o índice do dia selecionado vezes a largura de um DayBox
-        // Menos o deslocamento para centralizar e menos a largura de três DayBoxes para os dias anteriores.
         const position = (3 * width) - offset;
 
         if (scrollViewRef.current) {
@@ -46,7 +44,6 @@ const DateSlider = ({ selectedDate, onDateSelect }) => {
         }
     };
 
-    // Usando useEffect para rolar para o dia selecionado após a montagem do componente
     useEffect(() => {
         if (dayBoxWidth) {
             scrollToSelectedDate(dayBoxWidth);
@@ -63,7 +60,6 @@ const DateSlider = ({ selectedDate, onDateSelect }) => {
         >
             {dates.map((date, index) => (
                 <View key={index} onLayout={event => {
-                    // Isso só define a largura uma vez, pois todos os DayBox têm a mesma largura
                     if (dayBoxWidth === 0) {
                         const { width } = event.nativeEvent.layout;
                         setDayBoxWidth(width);

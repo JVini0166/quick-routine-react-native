@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
-
+import Envs from '../components/Envs';
 
 const CreateAccount = ({ navigation }) => {
 
@@ -18,9 +18,12 @@ const CreateAccount = ({ navigation }) => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     
-    const BACKEND_URL = "https://5000-jvini0166-quickroutinef-72i8dbpw89n.ws-us106.gitpod.io/quick-routine"
+    const BACKEND_URL = Envs.BACKEND_URL;
 
     const handleRegister = async () => {
+        if (!validateFields()) {
+            return;
+        }
         try {
             const response = await fetch(`${BACKEND_URL}/create_user`, {
                 method: 'POST',
@@ -49,6 +52,34 @@ const CreateAccount = ({ navigation }) => {
             setResponseMessage('Error registering user: ' + error.message);
         }
     }
+
+    
+    const validateFields = () => {
+        let isValid = true;
+        let message = '';
+
+        if (!name || !surname || !email || !password || !confirmPassword || !username) {
+            message = 'Todos os campos são obrigatórios.';
+            isValid = false;
+        } else if (!validateEmail(email)) {
+            message = 'E-mail inválido.';
+            isValid = false;
+        } else if (password.length < 8) {
+            message = 'A senha deve ter pelo menos 8 caracteres.';
+            isValid = false;
+        } else if (password !== confirmPassword) {
+            message = 'As senhas não coincidem.';
+            isValid = false;
+        }
+
+        setResponseMessage(message);
+        return isValid;
+    };
+
+    const validateEmail = (email) => {
+        const re = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+        return re.test(email);
+    };
 
 
     return (

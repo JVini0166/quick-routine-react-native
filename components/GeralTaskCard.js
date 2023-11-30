@@ -13,13 +13,13 @@ const GeralTaskCard = ({ task }) => {
     const getButtonContent = () => {
         switch (buttonState) {
             case 0:
-                return { icon: 'question', color: 'yellow' };
+                return { icon: 'question', color: '#f2cb15' };
             case 1:
                 return { icon: 'check', color: 'green' };
             case 2:
                 return { icon: 'close', color: 'red' };
             default:
-                return { icon: 'question', color: 'yellow' };
+                return { icon: 'question', color: '#f2cb15' };
         }
     };
 
