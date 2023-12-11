@@ -27,8 +27,23 @@ const CreateTask = ({ navigation }) => {
     };
 
     const createTask = async () => {
-        if (!taskTitle) {
-            // Aqui você pode definir uma lógica para mostrar um erro se o título estiver vazio
+        if (!taskTitle.trim()) {
+            alert('Por favor, insira um título para a tarefa.');
+            return;
+        }
+
+        if (!estimatedTimeHour.match(/^\d{1,2}$/) || estimatedTimeHour < 0 || estimatedTimeHour > 23) {
+            alert('Por favor, insira uma hora válida (0-23).');
+            return;
+        }
+    
+        if (!estimatedTimeMinute.match(/^\d{1,2}$/) || estimatedTimeMinute < 0 || estimatedTimeMinute > 59) {
+            alert('Por favor, insira um minuto válido (0-59).');
+            return;
+        }
+
+        if (!taskDate) {
+            alert('Por favor, escolha uma data para a tarefa.');
             return;
         }
     
@@ -193,6 +208,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'center',
         marginVertical: 8,
+        color: 'white'
     },
 });
 

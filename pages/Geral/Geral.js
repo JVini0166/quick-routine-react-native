@@ -22,7 +22,11 @@ const Geral = ({ navigation }) => {
     const [tasks, setTasks] = useState([]);
 
     
+    useEffect(() => {
+        fetchTasks();
+    }, [selectedDate]);
 
+    
     const getDayOfWeek = (date) => {
         const days = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sab'];
         return days[date.getDay()];
@@ -61,12 +65,18 @@ const Geral = ({ navigation }) => {
         try {
             const storedTasks = await AsyncStorage.getItem('tasks');
             if (storedTasks) {
-                setTasks(JSON.parse(storedTasks));
+                const allTasks = JSON.parse(storedTasks);
+                const filteredTasks = allTasks.filter(task => {
+                    const taskDate = new Date(task.date);
+                    return taskDate.toDateString() === selectedDate.toDateString();
+                });
+                setTasks(filteredTasks);
             }
         } catch (error) {
             console.error('Failed to fetch tasks:', error);
         }
     };
+    
 
     const fetchHabits = async () => {
         let storedHabits = await AsyncStorage.getItem('habits');
