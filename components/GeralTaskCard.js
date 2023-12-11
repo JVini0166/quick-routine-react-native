@@ -1,17 +1,61 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Card } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const GeralTaskCard = ({ task }) => {
-    const [buttonState, setButtonState] = useState(0);
+    const [buttonState, setButtonState] = useState(task.state); // Inicialize com o estado da tarefa
+    const [localTask, setLocalTask] = useState(task); // Estado local para armazenar a tarefa
+
+
+    const loadTask = async () => {
+        try {
+            const storedTasks = await AsyncStorage.getItem('tasks');
+            let tasks = storedTasks ? JSON.parse(storedTasks) : [];
+            let foundTask = tasks.find(t => t.id === task.id);
+            if (foundTask) {
+                setLocalTask(foundTask);
+            }
+        } catch (error) {
+            console.error('Erro ao carregar a tarefa do AsyncStorage', error);
+        }
+    };
+
+    useEffect(() => {
+        loadTask();
+    }, [buttonState]);
+
+
+    const updateTaskInAsyncStorage = async (newState) => {
+        try {
+            const storedTasks = await AsyncStorage.getItem('tasks');
+            let tasks = storedTasks ? JSON.parse(storedTasks) : [];
+
+            tasks = tasks.map(t => {
+                if (t.id === task.id) {
+                    const updatedTask = { ...t, state: newState };
+                    setLocalTask(updatedTask); // Atualiza o estado local da tarefa
+                    return updatedTask;
+                }
+                return t;
+            });
+
+            await AsyncStorage.setItem('tasks', JSON.stringify(tasks));
+        } catch (error) {
+            console.error('Erro ao atualizar a tarefa no AsyncStorage', error);
+        }
+    };
 
     const handleButtonPress = () => {
-        setButtonState((prevButtonState) => (prevButtonState + 1) % 3);
+        const newState = (buttonState + 1) % 3;
+        setButtonState(newState);
+        updateTaskInAsyncStorage(newState);
     };
 
     const getButtonContent = () => {
-        switch (buttonState) {
+        switch (buttonState) { // Alterado para usar buttonState
             case 0:
                 return { icon: 'question', color: '#f2cb15' };
             case 1:
@@ -27,18 +71,18 @@ const GeralTaskCard = ({ task }) => {
 
     return (
         <Card style={styles.card}>
-        <View style={styles.cardContent}>
-            <View style={styles.leftContainer}>
-                <Text style={styles.taskTitle}>{task.name}</Text>
-                <View style={styles.taskLabelContainer}> {/* Correção aqui */}
-                    <Text style={styles.taskLabelText}>Tarefa</Text>
+            <View style={styles.cardContent}>
+                <View style={styles.leftContainer}>
+                    <Text style={styles.taskTitle}>{localTask.name}</Text>
+                    <View style={styles.taskLabelContainer}>
+                        <Text style={styles.taskLabelText}>Tarefa</Text>
+                    </View>
                 </View>
+                <TouchableOpacity style={[styles.rightButton, { backgroundColor: color }]} onPress={handleButtonPress}>
+                    <Icon name={icon} size={20} color="#fff" />
+                </TouchableOpacity>
             </View>
-            <TouchableOpacity style={[styles.rightButton, { backgroundColor: color }]} onPress={handleButtonPress}>
-                <Icon name={icon} size={20} color="#fff" />
-            </TouchableOpacity>
-        </View>
-    </Card>
+        </Card>
     );
 };
 

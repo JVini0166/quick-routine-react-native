@@ -68,6 +68,7 @@ const CreateTask = ({ navigation }) => {
             hourAndMinute: formattedTime,
             date: formattedDate,
             keepPendent: checked,
+            state: 0,
             history: [],
         };
     

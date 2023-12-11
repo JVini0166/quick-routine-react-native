@@ -4,27 +4,36 @@ import { Button, Card, FAB } from 'react-native-paper';
 import { MaterialIcons } from '@expo/vector-icons';
 
 const Pomodoro = ({ navigation }) => {
-    const durations = {
+    // Estado inicial para as durações
+    const [durations, setDurations] = useState({
         Pomodoro: 25 * 60,
         'Pausa curta': 5 * 60,
         'Pausa longa': 15 * 60
-    };
+    });
 
     const [time, setTime] = useState(durations.Pomodoro);
     const [isActive, setIsActive] = useState(false);
     const [mode, setMode] = useState('Pomodoro');
 
     useEffect(() => {
-        let interval = null;
-        if (isActive) {
-            interval = setInterval(() => {
-                setTime(prevTime => prevTime - 1);
-            }, 1000);
-        } else {
-            clearInterval(interval);
+        loadSettings();
+    }, []);
+
+    const loadSettings = async () => {
+        try {
+            const storedSettings = await AsyncStorage.getItem('PomodoroSettings');
+            if (storedSettings !== null) {
+                const settings = JSON.parse(storedSettings);
+                setDurations({
+                    Pomodoro: parseInt(settings.pomodoroTime) * 60 || durations.Pomodoro,
+                    'Pausa curta': parseInt(settings.shortBreakTime) * 60 || durations['Pausa curta'],
+                    'Pausa longa': parseInt(settings.longBreakTime) * 60 || durations['Pausa longa']
+                });
+            }
+        } catch (error) {
+            console.error('Erro ao carregar configurações:', error);
         }
-        return () => clearInterval(interval);
-    }, [isActive]);
+    };
 
     const toggleTimer = () => {
         setIsActive(!isActive);
