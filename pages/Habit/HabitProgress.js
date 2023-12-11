@@ -65,7 +65,7 @@ const HabitProgress = ({ navigation, route }) => {
     return (
         <View style={styles.container}>
             {/* ProgressChart Card */}
-            <Card style={styles.card}>
+            {/* <Card style={styles.card}>
                 <Card.Content>
                     <ProgressChart
                         data={data}
@@ -77,7 +77,7 @@ const HabitProgress = ({ navigation, route }) => {
                         hideLegend={false}
                     />
                 </Card.Content>
-            </Card>
+            </Card> */}
             {/* Progress Counter Card */}
             <Card style={styles.card}>
                 <Card.Content>

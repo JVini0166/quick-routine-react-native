@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import colors from '../../components/colors';
 
 const EditRoutineItem = ({ navigation, route }) => {
     // Estados para armazenar os valores do formulário
@@ -73,12 +74,22 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
+        backgroundColor: colors.background,
     },
     input: {
-        marginBottom: 10,
+        height: 60,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginTop: 8,
+        paddingHorizontal: 8,
+        backgroundColor: '#f5f5f5', // Um cinza claro quase branco
+        color: 'black', // Certifique-se de que a cor do texto seja legível
+        borderRadius: 10,
     },
     button: {
         marginTop: 10,
+        backgroundColor: 'gray',
+        color: 'black',
     },
 });
 

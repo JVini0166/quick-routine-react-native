@@ -56,6 +56,21 @@ const Pomodoro = ({ navigation }) => {
         return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     }
 
+    useEffect(() => {
+        let interval = null;
+    
+        if (isActive) {
+            interval = setInterval(() => {
+                setTime((prevTime) => prevTime > 0 ? prevTime - 1 : 0);
+            }, 1000);
+        } else if (!isActive && time !== 0) {
+            clearInterval(interval);
+        }
+    
+        return () => clearInterval(interval);
+    }, [isActive, time]);
+    
+
     const colors = {
         Pomodoro: { bg: '#FF4D4D', card: '#FF8080' },
         'Pausa curta': { bg: '#4DFF4D', card: '#80FF80' },

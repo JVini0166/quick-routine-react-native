@@ -166,7 +166,7 @@ const styles = StyleSheet.create({
     responseMessage: {
         marginTop: 20,
         textAlign: 'center',
-        color: 'red', // Ajuste a cor conforme necessário
+        color: 'blue', // Ajuste a cor conforme necessário
     },
 });
 

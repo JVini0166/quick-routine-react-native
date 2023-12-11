@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import colors from '../../components/colors';
 
 const RoutineConfig = ({ navigation }) => {
     const [startHour, setStartHour] = useState('');
@@ -106,11 +106,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
+        backgroundColor: colors.background,
     },
     label: {
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 10,
+        color: 'white'
     },
     timeInputContainer: {
         flexDirection: 'row',
@@ -121,11 +123,23 @@ const styles = StyleSheet.create({
         marginHorizontal: 5,
     },
     input: {
-        marginBottom: 20,
+        height: 60,
+        borderColor: 'gray',
+        borderWidth: 1,
+        marginTop: 8,
+        paddingHorizontal: 8,
+        backgroundColor: '#f5f5f5', // Um cinza claro quase branco
+        color: 'black', // Certifique-se de que a cor do texto seja legível
+        borderRadius: 10,
     },
     button: {
         marginTop: 20,
+        backgroundColor: 'gray',
+        color: 'black',
     },
+    whiteText: {
+        color: 'white'
+    }
 });
 
 export default RoutineConfig;

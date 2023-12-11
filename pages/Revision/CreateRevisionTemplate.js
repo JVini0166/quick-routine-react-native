@@ -86,7 +86,6 @@ const CreateRevisionTemplate = ({navigation}) => {
 
     return (
         <View style={styles.container}>
-            <Text>Nome do Template de Revisão:</Text>
                 <TextInput 
                     style={styles.templateNameInput}
                     value={templateName}
