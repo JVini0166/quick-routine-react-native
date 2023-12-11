@@ -157,12 +157,15 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderWidth: 1,
         marginTop: 8,
+        backgroundColor: '#f5f5f5', // Um cinza claro quase branco
+        color: 'black', // Certifique-se de que a cor do texto seja legível
         paddingHorizontal: 8,
     },
     label: {
         fontSize: 16,
         fontWeight: 'bold',
         marginTop: 16,
+        color: 'white'
     },
     createButton: {
         marginTop: 16,
@@ -174,10 +177,14 @@ const styles = StyleSheet.create({
         marginTop: 16,
     },
     updateButton: {
+        backgroundColor: 'gray',
+        color: 'black',
         flex: 1,
         marginRight: 8, // para dar um pequeno espaço entre os botões
     },
     deleteButton: {
+        backgroundColor: 'gray',
+        color: 'black',
         flex: 1,
         marginLeft: 8, // para dar um pequeno espaço entre os botões
     },

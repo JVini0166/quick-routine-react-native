@@ -4,6 +4,7 @@ import { Button, TextInput, Checkbox } from 'react-native-paper';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { DatePickerModal } from 'react-native-paper-dates';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import colors from '../../components/colors';
 
 const CreateTask = ({ navigation }) => {
     const [taskTitle, setTaskTitle] = useState('');
@@ -100,7 +101,8 @@ const CreateTask = ({ navigation }) => {
 
                 <Button 
                     onPress={() => setOpenDatePicker(true)} 
-                    mode="outlined"
+                    mode="contained"
+                    style={styles.whiteButton}
                 >
                     Escolher Data da Tarefa
                 </Button>
@@ -119,6 +121,7 @@ const CreateTask = ({ navigation }) => {
                         onPress={() => {
                             setChecked(!checked);
                         }}
+                        style={styles.checkboxLabel}
                     />
                     <Text style={styles.checkboxLabel}>Tarefa Pendente</Text>
                 </View>
@@ -129,7 +132,7 @@ const CreateTask = ({ navigation }) => {
                 )}
 
                 <Button 
-                    style={styles.createButton}
+                    style={styles.whiteButton}
                     mode="contained"
                     onPress={createTask}
                 >
@@ -143,7 +146,8 @@ const CreateTask = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
+        padding: 10,
+        backgroundColor: colors.background,
     },
     input: {
         height: 60,
@@ -151,6 +155,9 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginTop: 8,
         paddingHorizontal: 8,
+        backgroundColor: '#f5f5f5', // Um cinza claro quase branco
+        color: 'black', // Certifique-se de que a cor do texto seja legível
+        borderRadius: 10,
     },
     timeContainer: {
         flexDirection: 'row',
@@ -163,10 +170,14 @@ const styles = StyleSheet.create({
         marginTop: 8,
         paddingHorizontal: 8,
         flex: 1,
+        backgroundColor: '#f5f5f5', // Um cinza claro quase branco
+        color: 'black', // Certifique-se de que a cor do texto seja legível
+        borderRadius: 10,
     },
-    createButton: {
+    whiteButton: {
         marginTop: 16,
-        alignSelf: 'center',
+        backgroundColor: 'gray',
+        color: 'black',
     },
     checkboxContainer: {
         flexDirection: 'row',
@@ -176,6 +187,7 @@ const styles = StyleSheet.create({
     checkboxLabel: {
         fontSize: 16,
         marginLeft: 8,
+        color: 'white',
     },
     dateText: {
         fontSize: 16,

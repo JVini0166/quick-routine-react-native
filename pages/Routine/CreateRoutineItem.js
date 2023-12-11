@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Button, TextInput } from 'react-native-paper';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import colors from '../../components/colors';
 
 const CreateRoutineItem = ({ navigation, route }) => {
     const [itemName, setItemName] = useState('');
@@ -99,6 +99,7 @@ const CreateRoutineItem = ({ navigation, route }) => {
                 <Button 
                     mode="contained"
                     onPress={() => navigation.navigate('RoutineItemFrequency')}
+                    style={styles.createButton}
                 >
                     Frequência
                 </Button>
@@ -150,7 +151,8 @@ const CreateRoutineItem = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
+        padding: 10,
+        backgroundColor: colors.background,
     },
     input: {
         height: 60,
@@ -158,11 +160,15 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginTop: 8,
         paddingHorizontal: 8,
+        backgroundColor: '#f5f5f5', // Um cinza claro quase branco
+        color: 'black', // Certifique-se de que a cor do texto seja legível
+        borderRadius: 10,
     },
     label: {
         fontSize: 16,
         fontWeight: 'bold',
         marginTop: 16,
+        color: 'white'
     },
     timeInputContainer: {
         flexDirection: 'row',
@@ -175,10 +181,14 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderWidth: 1,
         paddingHorizontal: 8,
+        backgroundColor: '#f5f5f5', // Um cinza claro quase branco
+        color: 'black', // Certifique-se de que a cor do texto seja legível
+        borderRadius: 10,
     },
     createButton: {
-        marginTop: 16,
-        alignSelf: 'center',
+        marginTop: '10px',
+        backgroundColor: 'gray',
+        color: 'black',
     },
 });
 

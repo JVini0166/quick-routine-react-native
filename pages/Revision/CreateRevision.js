@@ -6,7 +6,7 @@ import { DatePickerInput } from 'react-native-paper-dates';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Dropdown } from 'react-native-element-dropdown';
 import { useFocusEffect } from '@react-navigation/native';
-
+import colors from '../../components/colors';
 
 const CreateRevision = ({ navigation, route }) => {
     const [revisionName, setRevisionName] = useState(''); // <-- State for revision name
@@ -152,6 +152,7 @@ const CreateRevision = ({ navigation, route }) => {
                 <Button 
                     mode="contained"
                     onPress={() => navigation.navigate('CreateRevisionTemplate')}
+                    style={styles.createRevisionTemplate}
                 >
                     Criar Template de Revisão
                 </Button>
@@ -173,7 +174,8 @@ const CreateRevision = ({ navigation, route }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
+        padding: 10,
+        backgroundColor: colors.background,
     },
     input: {
         height: 60,
@@ -181,16 +183,35 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         marginTop: 8,
         paddingHorizontal: 8,
+        backgroundColor: '#f5f5f5', // Um cinza claro quase branco
+        color: 'black', // Certifique-se de que a cor do texto seja legível
+        borderRadius: 10,
     },
     label: {
         fontSize: 16,
         fontWeight: 'bold',
         marginTop: 16,
+        color: 'white',
+    },
+    createRevisionTemplate: {
+        alignSelf: 'center',
+        backgroundColor: 'gray',
+        color: 'black',
     },
     createButton: {
         marginTop: 16,
-        alignSelf: 'center',
+        backgroundColor: 'gray',
+        color: 'black',
     },
+    dropdown: {
+        color: 'white'
+    },
+    placeholderStyle: {
+        color:'white'
+    },
+    selectedTextStyle: {
+        color: 'white'
+    }
 });
 
 export default CreateRevision;

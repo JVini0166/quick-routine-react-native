@@ -149,6 +149,7 @@ const CreateHabit = ({ navigation, route }) => {
                     style={styles.whiteButton}
                     mode="contained"
                     onPress={createHabit} 
+                    
                 >
                     Criar
                 </Button>
