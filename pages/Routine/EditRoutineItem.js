@@ -39,7 +39,34 @@ const EditRoutineItem = ({ navigation, route }) => {
     }, [id]);
 
     const handleUpdate = async () => {
-        // Implemente a lógica para atualizar a rotina no AsyncStorage
+        try {
+            // Ler os dados existentes
+            const routineDataString = await AsyncStorage.getItem('routine');
+            let routineData = JSON.parse(routineDataString);
+    
+            // Atualizar a rotina
+            Object.keys(routineData).forEach(day => {
+                const routineIndex = routineData[day].findIndex(r => r.id === id);
+                if (routineIndex > -1) {
+                    routineData[day][routineIndex] = {
+                        ...routineData[day][routineIndex],
+                        name: itemName,
+                        description: description,
+                        // Adicione aqui outras propriedades que deseja atualizar
+                    };
+                }
+            });
+    
+            // Salvar os dados atualizados
+            await AsyncStorage.setItem('routine', JSON.stringify(routineData));
+            navigation.goBack();
+    
+            // Navegar de volta ou mostrar alguma mensagem de sucesso
+            // Por exemplo: navigation.goBack();
+        } catch (error) {
+            console.error('Erro ao atualizar a rotina:', error);
+            // Tratar erros, por exemplo, mostrar uma mensagem para o usuário
+        }
     };
 
     return (
