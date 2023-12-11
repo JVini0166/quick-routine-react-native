@@ -146,6 +146,7 @@ const styles = StyleSheet.create({
     dateText: {
         textAlign: 'center',
         marginBottom: 10,
+        color: 'white',
     },
     createButton: {
         marginTop: 10,
