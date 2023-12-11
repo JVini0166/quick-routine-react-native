@@ -3,6 +3,8 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Button, TextInput, Card } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Dropdown } from 'react-native-element-dropdown';
+import colors from '../../components/colors';
+
 
 const timeUnitsData = [
     { label: 'dias', value: 'dias' },
@@ -93,7 +95,7 @@ const CreateRevisionTemplate = ({navigation}) => {
                 />
             <View style={styles.row}>
                 
-                <Text>Após</Text>
+                <Text style={styles.whiteText}>Após</Text>
                 <TextInput 
                     style={styles.input}
                     value={timeValue}
@@ -111,7 +113,7 @@ const CreateRevisionTemplate = ({navigation}) => {
                         setSelectedTimeUnit(item.value);
                     }}
                 />
-                <Button onPress={addTimeEntry}>Adicionar tempo</Button>
+                <Button onPress={addTimeEntry} style={styles.whiteText}>Adicionar tempo</Button>
             </View>
 
             {timeEntries.map((entry, index) => (
@@ -137,7 +139,8 @@ const CreateRevisionTemplate = ({navigation}) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 16,
+        padding: 10,
+        backgroundColor: colors.background,
     },
     row: {
         flexDirection: 'row',
@@ -145,16 +148,31 @@ const styles = StyleSheet.create({
         marginVertical: 8,
         justifyContent: 'space-between',
     },
+    templateNameInput: {
+        backgroundColor: '#f5f5f5', // Um cinza claro quase branco
+        color: 'black', // Certifique-se de que a cor do texto seja legível
+        borderRadius: 10,
+    },
     input: {
         width: 50,
         height: 40,
         marginHorizontal: 8,
+        backgroundColor: '#f5f5f5', // Um cinza claro quase branco
+        color: 'black', // Certifique-se de que a cor do texto seja legível
+        borderRadius: 10,
     },
     dropdown: {
         margin: 8,
         height: 50,
         borderBottomColor: 'gray',
         borderBottomWidth: 0.5,
+        color: 'white',
+    },
+    placeholderStyle: {
+        color:'white'
+    },
+    selectedTextStyle: {
+        color: 'white'
     },
     card: {
         marginTop: 16,
@@ -174,7 +192,9 @@ const styles = StyleSheet.create({
         borderWidth: 0.5,
         paddingHorizontal: 10
     },
-
+    whiteText: {
+        color: 'white',
+    }
 });
 
 export default CreateRevisionTemplate;

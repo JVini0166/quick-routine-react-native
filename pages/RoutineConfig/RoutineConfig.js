@@ -90,7 +90,11 @@ const RoutineConfig = ({ navigation }) => {
 
             <Button 
                 mode="contained" 
-                onPress={saveRoutineSettings}
+                onPress={() => {
+                   saveRoutineSettings();
+                   navigation.navigate('Home');
+                }
+                }
                 style={styles.button}>
                 Salvar Configurações
             </Button>

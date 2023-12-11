@@ -11,17 +11,28 @@ import GeralHabitCard from '../../components/GeralHabitCard';
 import GeralRoutineCard from '../../components/GeralRoutineCard';
 import GeralRevisionCard from '../../components/GeralRevisionCard';
 import GeralTaskCard from '../../components/GeralTaskCard';
+import { useIsFocused } from '@react-navigation/native';
 
-const Geral = () => {
+
+const Geral = ({ navigation }) => {
     const [habits, setHabits] = useState([]);
     const [routines, setRoutines] = useState({});
     const [selectedDate, setSelectedDate] = useState(new Date());
     const [revisions, setRevisions] = useState([]);
     const [tasks, setTasks] = useState([]);
 
+    
+
     const getDayOfWeek = (date) => {
         const days = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sab'];
         return days[date.getDay()];
+    };
+
+    
+
+    const filteredRoutines = () => {
+        const dayOfWeek = getDayOfWeek(selectedDate);
+        return routines[dayOfWeek] || []; // Retorna as rotinas para o dia da semana ou um array vazio
     };
 
     const fetchRevisions = async () => {
@@ -46,11 +57,6 @@ const Geral = () => {
         }
     };
 
-    const filteredRoutines = () => {
-        const dayOfWeek = getDayOfWeek(selectedDate);
-        return routines[dayOfWeek] || []; // Retorna as rotinas para o dia da semana ou um array vazio
-    };
-
     const fetchTasks = async () => {
         try {
             const storedTasks = await AsyncStorage.getItem('tasks');
@@ -61,15 +67,33 @@ const Geral = () => {
             console.error('Failed to fetch tasks:', error);
         }
     };
+
+    const fetchHabits = async () => {
+        let storedHabits = await AsyncStorage.getItem('habits');
+        try {
+            if (storedHabits) {
+                setHabits(JSON.parse(storedHabits));
+            }
+        } catch (error) {
+            console.error('Failed to fetch habits:', error);
+        }
+        
+    };
+
+    const isFocused = useIsFocused();
+
+    useEffect(() => {
+        if (isFocused) {
+            fetchHabits();
+            fetchRoutines();
+            fetchRevisions();
+            fetchTasks();
+        }
+    }, [isFocused]);
     
     useFocusEffect(
         useCallback(() => {
-            const fetchHabits = async () => {
-                let storedHabits = await AsyncStorage.getItem('habits');
-                if (storedHabits) {
-                    setHabits(JSON.parse(storedHabits));
-                }
-            };
+            
             fetchHabits();
             fetchRoutines();
             fetchRevisions();

@@ -8,12 +8,15 @@ import Routine from './Routine/Routine'
 import colors from '../components/colors'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Tasks from './Tasks/Tasks';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
+
 
 const Home = ({ navigation }) => {
 
   const [drawerVisible, setDrawerVisible] = useState(false);
   const [userName, setUserName] = useState('');
 
+    
 
   const toggleDrawer = () => setDrawerVisible(!drawerVisible);
 
@@ -94,7 +97,7 @@ const handleLogout = async () => {
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
-    geral: Geral,
+    geral: () => <Geral navigation={navigation} />,
     routine: () => <Routine navigation={navigation} />,
     habitos: () => <Habit navigation={navigation} />,
     revisoes: () => <Revision navigation={navigation} />,
