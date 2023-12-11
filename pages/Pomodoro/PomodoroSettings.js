@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { TextInput, Switch, Divider, Button } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import colors from '../../components/colors';
+
 
 const PomodoroSettings = () => {
     const [pomodoroTime, setPomodoroTime] = useState('');
@@ -88,16 +90,16 @@ const PomodoroSettings = () => {
             <Divider style={styles.divider} />
 
             <View style={styles.switchContainer}>
-                <Text>Começar pausas auto</Text>
+                <Text style={styles.whiteText}>Começar pausas auto</Text>
                 <Switch value={autoStartBreaks} onValueChange={setAutoStartBreaks} />
             </View>
             <View style={styles.switchContainer}>
-                <Text>Começar pomodoros auto</Text>
+                <Text style={styles.whiteText}>Começar pomodoros auto</Text>
                 <Switch value={autoStartPomodoros} onValueChange={setAutoStartPomodoros} />
             </View>
 
             <View style={styles.textWithInput}>
-                <Text>Qntd Pomodoros Pausa Longa:</Text>
+                <Text style={styles.whiteText}>Qntd Pomodoros Pausa Longa:</Text>
                 <TextInput
                     value={pomodoroCount}
                     onChangeText={setPomodoroCount}
@@ -105,7 +107,7 @@ const PomodoroSettings = () => {
                     keyboardType="numeric"
                 />
             </View>
-            <Button mode="contained" onPress={saveSettings}>Salvar</Button>
+            <Button mode="contained" onPress={saveSettings} style={styles.whiteButton}>Salvar</Button>
         </View>
     );
 }
@@ -113,11 +115,13 @@ const PomodoroSettings = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 20,
+        padding: 10,
+        backgroundColor: colors.background,
     },
     title: {
         fontSize: 18,
         marginBottom: 20,
+        color: 'white',
     },
     inputContainer: {
         flexDirection: 'row',
@@ -126,6 +130,9 @@ const styles = StyleSheet.create({
     input: {
         flex: 1,
         marginHorizontal: 5,
+        backgroundColor: '#f5f5f5', // Um cinza claro quase branco
+        color: 'black', // Certifique-se de que a cor do texto seja legível
+        borderRadius: 10,
     },
     divider: {
         marginVertical: 20,
@@ -144,6 +151,14 @@ const styles = StyleSheet.create({
     shortInput: {
         width: 50,
         marginLeft: 10,
+    },
+    whiteText: {
+        color: 'white'
+    },
+    whiteButton: {
+        marginTop: 16,
+        backgroundColor: 'gray',
+        color: 'black',
     },
 });
 

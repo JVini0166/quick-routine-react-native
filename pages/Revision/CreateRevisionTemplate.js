@@ -120,7 +120,7 @@ const CreateRevisionTemplate = ({navigation}) => {
                 <Card key={index} style={styles.card}>
                     <Card.Content style={styles.cardContent}>
                         <Text>{entry.value} {entry.unit}</Text>
-                        <Button onPress={() => removeTimeEntry(index)}>-</Button>
+                        <Button onPress={() => removeTimeEntry(index)}>Deletar</Button>
                     </Card.Content>
                 </Card>
             ))}
@@ -167,6 +167,7 @@ const styles = StyleSheet.create({
         borderBottomColor: 'gray',
         borderBottomWidth: 0.5,
         color: 'white',
+        backgroundColor: 'white',
     },
     placeholderStyle: {
         color:'white'
@@ -183,6 +184,8 @@ const styles = StyleSheet.create({
     },
     createButton: {
         marginTop: 24,
+        backgroundColor: 'gray',
+        color: 'black',
     },
     templateNameInput: {
         width: '100%',

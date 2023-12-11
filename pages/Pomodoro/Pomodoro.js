@@ -65,13 +65,13 @@ const Pomodoro = ({ navigation }) => {
                 </View>
                 <Text style={styles.timerText}>{displayTime()}</Text>
                 <Button onPress={toggleTimer}>
-                    {isActive ? "Pause" : "Start"}
+                    {isActive ? "Pausar" : "Começar"}
                 </Button>
-                <Button onPress={resetTimer}>Reset</Button>
+                <Button onPress={resetTimer}>Resetar</Button>
             </Card>
             <FAB
                 style={styles.fab}
-                icon="settings"  // Atualizado para o ícone de configuração
+                icon="plus"  // Atualizado para o ícone de configuração
                 onPress={() => navigation.navigate('PomodoroSettings')} // Navega para PomodoroSettings
             />
         </View>
@@ -114,6 +114,8 @@ const styles = StyleSheet.create({
         margin: 16,
         right: 0,
         bottom: 0,
+        color: 'orange',
+        backgroundColor: 'orange'
     },
 });
 
