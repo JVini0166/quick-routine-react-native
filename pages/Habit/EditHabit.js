@@ -4,7 +4,7 @@ import { Button, TextInput } from 'react-native-paper';
 import { DatePickerInput } from 'react-native-paper-dates';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import colors from '../../components/colors';
 
 const EditHabit = ({ navigation, route }) => {
     const habitData = route.params;
@@ -111,6 +111,7 @@ const EditHabit = ({ navigation, route }) => {
                         days: days,
                         repeat: repeat 
                     })}
+                    style={styles.frequencyButton}
                 >
                     Selecionar
                 </Button>
@@ -151,6 +152,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
+        backgroundColor: colors.background,
     },
     input: {
         height: 60,
@@ -188,5 +190,9 @@ const styles = StyleSheet.create({
         flex: 1,
         marginLeft: 8, // para dar um pequeno espaço entre os botões
     },
+    frequencyButton: {
+        backgroundColor: 'gray',
+        color: 'black',
+    }
 });
 export default EditHabit;

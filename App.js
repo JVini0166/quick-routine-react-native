@@ -22,7 +22,7 @@ import RoutineItemFrequency from './pages/Routine/RoutineItemFrequency';
 import CreateTask from './pages/Tasks/CreateTask';
 import EditTask from './pages/Tasks/EditTask';
 import EditRoutineItem from './pages/Routine/EditRoutineItem';
-
+import EditRevision from './pages/Revision/EditRevision';
 
 const Stack = createNativeStackNavigator();
 
@@ -130,6 +130,11 @@ const App = () => {
         name="EditRoutineItem" 
         component={EditRoutineItem} 
         options={{ title: 'Editar Rotina' }}
+        />
+        <Stack.Screen 
+        name="EditRevision" 
+        component={EditRevision} 
+        options={{ title: 'Editar Revisão' }}
         />
       </Stack.Navigator>
     </NavigationContainer>

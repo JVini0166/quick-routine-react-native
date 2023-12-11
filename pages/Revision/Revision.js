@@ -71,7 +71,7 @@ const Revision = ({ navigation }) => {
                         <View style={styles.bottomSheet}>
                             {/* Exemplo de uma opção no BottomSheet */}
                             <TouchableOpacity onPress={() => {
-                                navigation.navigate('EditRevision', selectedRevision);
+                                navigation.navigate('EditRevision', selectedRevision.id);
                                 setBottomSheetVisible(false);
                             }}>
                                 <Text>Editar Revisão</Text>
