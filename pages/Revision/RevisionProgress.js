@@ -11,11 +11,80 @@ const RevisionProgress = ({ navigation, route }) => {
 
     const [revisionStatuses, setRevisionStatuses] = useState({});
 
-    const handleStatusChange = (date, status) => {
+    useEffect(() => {
+        const fetchRevision = async () => {
+            try {
+                const storedRevisions = await AsyncStorage.getItem('revisions');
+                if (storedRevisions) {
+                    const revisions = JSON.parse(storedRevisions);
+                    const rev = revisions.find(r => r.id === revisionId);
+                    setRevision(rev);
+    
+                    // Atualizar o estado revisionStatuses com base no histórico
+                    const newStatuses = {};
+                    rev.history.forEach(item => {
+                        newStatuses[item.date] = item.checked === 1 ? 'certo' : 'errado';
+                    });
+                    setRevisionStatuses(newStatuses);
+                }
+            } catch (error) {
+                console.error('Failed to fetch revision:', error);
+            }
+        };
+    
+        fetchRevision();
+    }, [revisionId]);
+
+    const handleStatusChange = async (date, status) => {
+        const checked = status === 'certo' ? 1 : 0;
+    
+        // Atualiza o estado revisionStatuses
         setRevisionStatuses(prevStatuses => ({
             ...prevStatuses,
             [date]: status
         }));
+    
+        // Atualiza o estado revision com o novo ou atualizado histórico
+        setRevision(prevRevision => {
+            const historyIndex = prevRevision.history.findIndex(h => h.date === date);
+            
+            let updatedHistory;
+            if (historyIndex > -1) {
+                // Atualiza a entrada existente
+                updatedHistory = prevRevision.history.map((h, index) => 
+                    index === historyIndex ? { ...h, checked } : h
+                );
+            } else {
+                // Adiciona uma nova entrada
+                updatedHistory = [...prevRevision.history, { date, checked }];
+            }
+    
+            const updatedRevision = {
+                ...prevRevision,
+                history: updatedHistory
+            };
+    
+            // Salva a revisão atualizada no AsyncStorage
+            saveRevision(updatedRevision);
+    
+            return updatedRevision;
+        });
+    };
+
+    const saveRevision = async (updatedRevision) => {
+        try {
+            const storedRevisions = await AsyncStorage.getItem('revisions');
+            let revisions = storedRevisions ? JSON.parse(storedRevisions) : [];
+            const revisionIndex = revisions.findIndex(r => r.id === updatedRevision.id);
+            if (revisionIndex !== -1) {
+                revisions[revisionIndex] = updatedRevision;
+            } else {
+                revisions = [...revisions, updatedRevision];
+            }
+            await AsyncStorage.setItem('revisions', JSON.stringify(revisions));
+        } catch (error) {
+            console.error('Failed to save revision:', error);
+        }
     };
 
     

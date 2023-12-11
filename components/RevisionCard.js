@@ -9,11 +9,14 @@ const RevisionCard = ({ revision }) => {
         const today = new Date();
         for (const date of revision.revisionDates) {
             const revisionDate = new Date(date);
-            if (revisionDate > today) {
+    
+            // Verificar se a data está no histórico e marcada com 1
+            const isCompleted = revision.history.some(h => h.date === date && h.checked === 1);
+            if (revisionDate > today && !isCompleted) {
                 return revisionDate;
             }
         }
-        return null; // Todas as revisões já foram realizadas
+        return null; // Todas as revisões elegíveis já foram realizadas
     };
 
     const nextRevisionDate = getNextRevisionDate();
