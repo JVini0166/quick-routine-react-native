@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import { TextInput, Button, Avatar } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import colors from '../../components/colors';
+
 
 const Perfil = () => {
     const [userInfo, setUserInfo] = useState({
@@ -13,8 +15,25 @@ const Perfil = () => {
 
     // Função para lidar com a atualização dos dados do perfil
     const handleUpdate = async () => {
-        // Aqui, você pode adicionar a lógica para atualizar os dados do perfil
-        // Por exemplo, enviar para um servidor ou atualizar no AsyncStorage
+        try {
+            // Obtém as informações atuais do usuário do AsyncStorage
+            const storedUserInfo = await AsyncStorage.getItem('userinfo');
+            let currentUserInfo = JSON.parse(storedUserInfo);
+
+            // Atualiza apenas o nome e sobrenome
+            currentUserInfo = {
+                ...currentUserInfo,
+                name: userInfo.name,
+                surname: userInfo.surname
+            };
+
+            // Salva as informações atualizadas no AsyncStorage
+            await AsyncStorage.setItem('userinfo', JSON.stringify(currentUserInfo));
+            alert("Perfil atualizado com sucesso!"); // Notifica o usuário sobre a atualização bem-sucedida
+        } catch (error) {
+            // Em caso de erro, exibe uma mensagem
+            alert("Erro ao atualizar o perfil.");
+        }
     };
 
     useEffect(() => {
@@ -85,9 +104,13 @@ const styles = StyleSheet.create({
     profileIconContainer: {
         alignItems: 'center',
         marginBottom: 20,
+        color: 'orange',
     },
     input: {
         marginBottom: 20,
+        backgroundColor: '#f5f5f5', // Um cinza claro quase branco
+        color: 'black', // Certifique-se de que a cor do texto seja legível
+        borderRadius: 10,
     },
     nonEditableInput: {
         backgroundColor: '#e0e0e0', // Cinza claro para indicar campo não editável
