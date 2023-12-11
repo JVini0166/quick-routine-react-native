@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     rightButton: {
         padding: 10,
         borderRadius: 5,
-        marginRight: 0, // Isso garante que o botão esteja encostado na direita do Card
+        marginLeft: 200, // Adiciona um espaçamento entre o botão e o conteúdo da esquerda
     },
 });
 

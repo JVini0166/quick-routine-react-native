@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     rightButton: {
         padding: 10,
         borderRadius: 5,
-        marginRight: 0,
+        marginLeft: 200, // Adiciona um espaçamento entre o botão e o conteúdo da esquerda
     },
 });
 
