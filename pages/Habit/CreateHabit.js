@@ -122,6 +122,7 @@ const CreateHabit = ({ navigation, route }) => {
                         days: days,
                         repeat: repeat 
                     })}
+                    style={styles.whiteButton}
                 >
                     Selecionar
                 </Button>
@@ -145,7 +146,7 @@ const CreateHabit = ({ navigation, route }) => {
                 />
                 {error && <Text style={{color: 'red', textAlign: 'center', marginVertical: 10}}>{error}</Text>}
                 <Button 
-                    style={styles.createButton}
+                    style={styles.whiteButton}
                     mode="contained"
                     onPress={createHabit} 
                 >
@@ -178,16 +179,22 @@ const styles = StyleSheet.create({
         paddingHorizontal: 8,
         backgroundColor: '#f5f5f5', // Um cinza claro quase branco
         color: 'black', // Certifique-se de que a cor do texto seja legível
+        borderRadius: 10,
     },
     label: {
         fontSize: 16,
         fontWeight: 'bold',
         marginTop: 16,
+        color: 'white'
     },
     createButton: {
         marginTop: 16,
         alignSelf: 'center',
     },
+    whiteButton: {
+        backgroundColor: 'gray',
+        color: 'black',
+    }
 });
 
 export default CreateHabit;
