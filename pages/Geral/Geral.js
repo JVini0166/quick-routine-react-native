@@ -24,6 +24,7 @@ const Geral = ({ navigation }) => {
     
     useEffect(() => {
         fetchTasks();
+        fetchRevisions();
     }, [selectedDate]);
 
     
@@ -43,7 +44,13 @@ const Geral = ({ navigation }) => {
         try {
             const storedRevisions = await AsyncStorage.getItem('revisions');
             if (storedRevisions) {
-                setRevisions(JSON.parse(storedRevisions));
+                const allRevisions = JSON.parse(storedRevisions);
+                const filteredRevisions = allRevisions.filter(revision => 
+                    revision.revisionDates.some(revisionDate => 
+                        new Date(revisionDate).toDateString() === selectedDate.toDateString()
+                    )
+                );
+                setRevisions(filteredRevisions);
             }
         } catch (error) {
             console.error('Failed to fetch revisions:', error);
