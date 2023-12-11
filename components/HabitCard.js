@@ -9,7 +9,8 @@ const HabitCard = ({ habit, navigation, onSelect }) => {
     const currentDay = currentDate.getDate();
     const currentDayOfWeek = currentDate.getDay();
     const currentDateString = currentDate.toISOString().slice(0, 10);
-    const existingDateEntry = habit.history.find(d => d.date === currentDateString);
+    const existingDateEntry = habit.history?.find(d => d.date === currentDateString);
+
 
     // Se a entrada da data atual existir, defina lastBoxColor de acordo com seu valor
     const initialColor = (existingDateEntry && (

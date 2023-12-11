@@ -4,7 +4,7 @@ import { Button, TextInput, Checkbox } from 'react-native-paper';
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { DatePickerModal } from 'react-native-paper-dates';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import colors from '../../components/colors';
 const EditTask = ({ navigation, route }) => {
     
     const task  = route.params;
@@ -83,7 +83,8 @@ const EditTask = ({ navigation, route }) => {
                 </View>
                 <Button
                     onPress={() => setOpenDatePicker(true)}
-                    mode="outlined"
+                    mode="contained"
+                    style={styles.whiteButton}
                 >
                     Escolher Data da Tarefa
                 </Button>
@@ -108,7 +109,7 @@ const EditTask = ({ navigation, route }) => {
                     </Text>
                 )}
                 <Button
-                    style={styles.createButton}
+                    style={styles.whiteButton}
                     mode="contained"
                     onPress={updateTask}
                 >
@@ -123,9 +124,13 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 16,
+        backgroundColor: colors.background,
     },
     input: {
         marginBottom: 10,
+        backgroundColor: '#f5f5f5', // Um cinza claro quase branco
+        color: 'black', // Certifique-se de que a cor do texto seja legível
+        borderRadius: 10,
     },
     timeContainer: {
         flexDirection: 'row',
@@ -142,6 +147,7 @@ const styles = StyleSheet.create({
     },
     checkboxLabel: {
         marginLeft: 8,
+        color: 'white'
     },
     dateText: {
         textAlign: 'center',
@@ -151,6 +157,10 @@ const styles = StyleSheet.create({
     createButton: {
         marginTop: 10,
     },
+    whiteButton: {
+        backgroundColor: 'gray',
+        color: 'black',
+    }
 });
 
 export default EditTask;
